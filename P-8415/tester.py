@@ -4,7 +4,7 @@ import os
 
 # AWS configuration
 REGION = 'us-east-1'  # Replace with your AWS region
-INSTANCE_ID = 'i-082e5a4544d961da6'  # Replace with your instance ID or set to None if using IP
+INSTANCE_ID = 'i-03d45d586c12e2658'  # Replace with your instance ID or set to None if using IP
 
 # Replace with the path to your SSH private key file
 KEY_FILE_PATH = 'SQL.pem'
@@ -13,7 +13,7 @@ KEY_FILE_PATH = 'SQL.pem'
 USERNAME = 'ubuntu'
 
 # Replace with the path to the script you want to deploy
-LOCAL_SCRIPT_PATH = 'setup_minis.sh'
+LOCAL_SCRIPT_PATH = 'setup_proxy.sh'
 
 # Remote path where the script will be uploaded
 REMOTE_SCRIPT_PATH = f'/home/{USERNAME}/{os.path.basename(LOCAL_SCRIPT_PATH)}'

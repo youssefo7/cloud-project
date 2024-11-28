@@ -13,9 +13,8 @@ sudo mysql -e "DELETE FROM mysql.user WHERE User='';"
 sudo mysql -e "DROP DATABASE IF EXISTS test;"
 sudo mysql -e "FLUSH PRIVILEGES;"
 
-# Optionally, allow remote connections to MySQL (if required)
-# sudo sed -i 's/bind-address\s*=.*$/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
-# sudo systemctl restart mysql
+sudo sed -i 's/bind-address\s*=.*$/bind-address = 0.0.0.0/' /etc/mysql/mysql.conf.d/mysqld.cnf
+sudo systemctl restart mysql
 
 # Install the Sakila sample database
 wget https://downloads.mysql.com/docs/sakila-db.tar.gz

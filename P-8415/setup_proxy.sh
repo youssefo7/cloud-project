@@ -1,109 +1,61 @@
 #!/bin/bash
 
-# Assign arguments to variables
-MANAGER_IP="$1"
-WORKER_IPS="$2"  # Comma-separated list of worker IPs
+# Variables
+MASTER_HOST="3.91.215.132"  # Replace with your master node's IP
+SLAVE1_HOST="52.201.51.167" # Replace with your first slave node's IP
+SLAVE2_HOST="54.221.53.102" # Replace with your second slave node's IP
+PROXYSQL_ADMIN_USER="admin"
+PROXYSQL_ADMIN_PASS="admin"
 
-# Update package lists
-sudo apt-get update
+# Install MySQL client
+echo "Installing MySQL client..."
+sudo apt-get install -y mysql-client
 
 # Install ProxySQL
-wget https://github.com/sysown/proxysql/releases/download/v2.0.17/proxysql_2.0.17-ubuntu20_amd64.deb
-sudo dpkg -i proxysql_2.0.17-ubuntu20_amd64.deb
+echo "Installing ProxySQL..."
+wget -O - 'https://repo.proxysql.com/ProxySQL/repo_pub_key' | sudo apt-key add -
+echo "deb https://repo.proxysql.com/ProxySQL/proxysql-2.4.x/$(lsb_release -sc)/ ./ " | sudo tee /etc/apt/sources.list.d/proxysql.list
+sudo apt-get update
+sudo apt-get install -y proxysql
 
-# Start ProxySQL
+# Start ProxySQL service
+echo "Starting ProxySQL service..."
 sudo systemctl start proxysql
+sudo systemctl enable proxysql
 
 # Configure ProxySQL
-# Login to ProxySQL admin interface
-sudo mysql -u admin -padmin -h 127.0.0.1 -P6032 <<EOF
+echo "Configuring ProxySQL..."
+mysql -u $PROXYSQL_ADMIN_USER -p$PROXYSQL_ADMIN_PASS -h 127.0.0.1 -P6032 <<EOF
 
--- Add MySQL servers
--- Manager node
-INSERT INTO mysql_servers (hostgroup_id, hostname, port) VALUES (10, '$MANAGER_IP', 3306);
+-- Add master to hostgroup 1 (Direct Hit - all traffic to master)
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (1, '$MASTER_HOST', 3306);
 
-EOF
+-- Add master and slaves to hostgroup 2 (Random - random read, write to master)
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (2, '$MASTER_HOST', 3306);
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (2, '$SLAVE1_HOST', 3306);
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (2, '$SLAVE2_HOST', 3306);
 
-# Split WORKER_IPS and insert each worker
-IFS=',' read -ra ADDR <<< "$WORKER_IPS"
-for WORKER_IP in "${ADDR[@]}"; do
-sudo mysql -u admin -padmin -h 127.0.0.1 -P6032 <<EOF
-INSERT INTO mysql_servers (hostgroup_id, hostname, port) VALUES (20, '$WORKER_IP', 3306);
-EOF
-done
+-- Add master and one optimized slave to hostgroup 3 (Customized - best latency slave)
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (3, '$MASTER_HOST', 3306);
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (3, '$SLAVE1_HOST', 3306); -- Default optimized slave
+INSERT INTO mysql_servers(hostgroup_id, hostname, port) VALUES (4, '$SLAVE2_HOST', 3306);
 
-sudo mysql -u admin -padmin -h 127.0.0.1 -P6032 <<EOF
+-- Create query rules for Direct Hit (all queries to master)
+INSERT INTO mysql_query_rules(rule_id, match_pattern, destination_hostgroup, apply) VALUES (1, '.*', 1, 0);
 
--- Add users
-INSERT INTO mysql_users (username, password, default_hostgroup) VALUES ('root', '', 10);
+-- Create query rules for Random (writes to master, reads to random slaves)
+INSERT INTO mysql_query_rules(rule_id, match_pattern, destination_hostgroup, apply) VALUES (2, '^(INSERT|UPDATE|DELETE|REPLACE).*$', 2, 0);
+INSERT INTO mysql_query_rules(rule_id, match_pattern, destination_hostgroup, apply) VALUES (3, '^SELECT.*$', 2, 0);
 
--- Load to runtime and save
+-- Create query rules for Customized (writes to master, reads to optimized slave)
+INSERT INTO mysql_query_rules(rule_id, match_pattern, destination_hostgroup, apply) VALUES (4, '^(INSERT|UPDATE|DELETE|REPLACE).*$', 3, 0);
+INSERT INTO mysql_query_rules(rule_id, match_pattern, destination_hostgroup, apply) VALUES (5, '^SELECT.*$', 3, 0);
+
+-- Load configuration into runtime and save to disk
 LOAD MYSQL SERVERS TO RUNTIME;
-SAVE MYSQL SERVERS TO DISK;
-
-LOAD MYSQL USERS TO RUNTIME;
-SAVE MYSQL USERS TO DISK;
-EOF
-
-# Implement Proxy Patterns
-
-# Direct Hit Pattern
-sudo mysql -u admin -padmin -h 127.0.0.1 -P6032 <<EOF
-
-DELETE FROM mysql_query_rules;
-
--- Direct Hit rule: All traffic to manager (hostgroup 10)
-INSERT INTO mysql_query_rules (rule_id, active, match_pattern, destination_hostgroup) VALUES (1, 1, '.*', 10);
-
 LOAD MYSQL QUERY RULES TO RUNTIME;
+SAVE MYSQL SERVERS TO DISK;
 SAVE MYSQL QUERY RULES TO DISK;
 EOF
 
-# Random Selection Pattern
-# To implement Random Selection, comment out the Direct Hit rules and uncomment the following:
-
-# sudo mysql -u admin -padmin -h 127.0.0.1 -P6032 <<EOF
-
-# DELETE FROM mysql_query_rules;
-
-# -- Write queries to manager (hostgroup 10)
-# INSERT INTO mysql_query_rules (rule_id, active, match_pattern, negate_match_pattern, destination_hostgroup, apply) \
-# VALUES (1, 1, '^SELECT', 1, 10, 1);
-
-# -- Read queries to workers (hostgroup 20)
-# INSERT INTO mysql_query_rules (rule_id, active, match_pattern, destination_hostgroup, apply) \
-# VALUES (2, 1, '^SELECT', 20, 1);
-
-# LOAD MYSQL QUERY RULES TO RUNTIME;
-# SAVE MYSQL QUERY RULES TO DISK;
-# EOF
-
-# Customized Selection Pattern based on ping time
-# Enable monitoring and configure replication hostgroups
-
-sudo mysql -u admin -padmin -h 127.0.0.1 -P6032 <<EOF
-
--- Enable monitoring
-SET mysql-monitor_username='monitor';
-SET mysql-monitor_password='';
-
--- Configure replication hostgroups
-INSERT INTO mysql_replication_hostgroups (writer_hostgroup, reader_hostgroup, comment) VALUES (10, 20, 'Replication hostgroups');
-
-LOAD MYSQL VARIABLES TO RUNTIME;
-SAVE MYSQL VARIABLES TO DISK;
-
-LOAD MYSQL SERVERS TO RUNTIME;
-SAVE MYSQL SERVERS TO DISK;
-EOF
-
-# Create the monitoring user on backend servers (manager and workers)
-for HOST in "$MANAGER_IP" "${ADDR[@]}"; do
-  mysql -h "$HOST" -u root -e "CREATE USER IF NOT EXISTS 'monitor'@'%' IDENTIFIED WITH mysql_native_password;"
-  mysql -h "$HOST" -u root -e "GRANT USAGE ON *.* TO 'monitor'@'%';"
-done
-
-# Restart ProxySQL to apply changes
-sudo systemctl restart proxysql
-
-echo "Proxy server setup complete."
+echo "ProxySQL setup complete with all modes configured."
