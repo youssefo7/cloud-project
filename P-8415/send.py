@@ -2,13 +2,13 @@ import requests
 import time
 
 # Proxy Configuration
-PROXY_URL = "http://44.222.224.7:3306"  # Replace with your proxy's public IP
+PROXY_URL = "http://100.27.189.138:3306"  # Replace with your proxy's public IP
 MODES = ["direct_hit", "random", "customized"]
 
 # Test Data
 TEST_DB = "sakila"
-TEST_TABLE = "replication_test"
-TEST_DATA = {"id": 3, "data": "proxy_test"}
+TEST_TABLE = "cock"
+TEST_DATA = {"id": 4, "data": "proxy_test"}
 
 def test_proxy():
     for mode in MODES:
@@ -22,10 +22,23 @@ def test_proxy():
             print(f"Failed to set mode {mode}: {response.text}")
             continue
 
-        # Step 2a: Create Table through Proxy
+        # Step 2a: Use Sakila Database through Proxy
+        print("Switching to Sakila database through Proxy...")
+        use_db_query = "USE sakila;"
+        use_db_data = {
+            "query": use_db_query
+        }
+        response = requests.post(f"{PROXY_URL}/query", json=use_db_data)
+        if response.status_code == 200:
+            print(f"Database switched to 'sakila': {response.json()}")
+        else:
+            print(f"Failed to switch to 'sakila': {response.text}")
+            continue
+
+        # Step 2b: Create Table through Proxy
         print("Creating table through Proxy...")
         create_table_query = f"""
-        CREATE TABLE IF NOT EXISTS {TEST_DB}.{TEST_TABLE} (
+        CREATE TABLE IF NOT EXISTS {TEST_TABLE} (
             id INT PRIMARY KEY,
             data VARCHAR(255)
         );
@@ -40,10 +53,10 @@ def test_proxy():
             print(f"Table creation failed: {response.text}")
             continue
 
-        # Step 2b: Insert Data through Proxy
+        # Step 2c: Insert Data through Proxy
         print("Inserting data through Proxy...")
         insert_query = f"""
-        INSERT INTO {TEST_DB}.{TEST_TABLE} (id, data) VALUES
+        INSERT INTO {TEST_TABLE} (id, data) VALUES
         ({TEST_DATA['id']}, '{TEST_DATA['data']}')
         ON DUPLICATE KEY UPDATE data = '{TEST_DATA['data']}';
         """
@@ -54,6 +67,8 @@ def test_proxy():
         response = requests.post(f"{PROXY_URL}/query", json=insert_data)
         if response.status_code == 200:
             print(f"Insert successful: {response.json()}")
+            print("Waiting for replication to complete...")
+            time.sleep(2)  # Wait for replication
         else:
             print(f"Insert failed: {response.text}")
             continue
@@ -61,7 +76,7 @@ def test_proxy():
         # Step 3: Read Data through Proxy
         print("Reading data through Proxy...")
         select_data = {
-            "query": f"SELECT * FROM {TEST_DB}.{TEST_TABLE};"
+            "query": f"SELECT * FROM {TEST_TABLE};"
         }
         response = requests.post(f"{PROXY_URL}/query", json=select_data)
         if response.status_code == 200:

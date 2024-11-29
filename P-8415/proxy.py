@@ -2,13 +2,15 @@ import pymysql
 import random
 import sqlparse
 import ping3
+import socket
+import time
 from flask import Flask, request
 
 # Configuration
-MANAGER = {"host": "54.83.100.242", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306}
+MANAGER = {"host": "3.87.153.47", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306}
 WORKERS = [
-    {"host": "44.222.228.71", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
-    {"host": "54.83.100.242", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
+    {"host": "54.175.178.225", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
+    {"host": "34.226.194.100", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
 ]
 
 app = Flask(__name__)
@@ -27,6 +29,30 @@ def parse_query(query):
     return query_type.upper()
 
 
+
+
+def test_tcp_latency(host, port=3306):
+    """Measure the latency to a MySQL instance using TCP."""
+    try:
+        start = time.time()
+        with socket.create_connection((host, port), timeout=2):
+            return time.time() - start
+    except Exception:
+        return None  # Return None for unreachable hosts
+
+def validate_replication(worker):
+    """Check if the worker is caught up with replication."""
+    try:
+        connection = connect_to_db(worker)
+        with connection.cursor() as cursor:
+            cursor.execute("SHOW SLAVE STATUS;")
+            status = cursor.fetchone()
+            if status:
+                return status["Seconds_Behind_Master"] == 0  # Ensure no replication lag
+    except Exception as e:
+        print(f"Error validating replication for {worker['host']}: {e}")
+    return False
+
 def route_query(query):
     """Route the query based on the mode."""
     query_type = parse_query(query)
@@ -40,12 +66,19 @@ def route_query(query):
     elif mode == "customized":
         if query_type == "SELECT":
             latencies = {worker["host"]: ping3.ping(worker["host"]) for worker in WORKERS}
-            best_worker = min(latencies, key=latencies.get)
+            print(f"Calculated latencies: {latencies}")  # Debug logging
+            available_workers = {host: latency for host, latency in latencies.items() if latency is not None}
+            if not available_workers:
+                raise Exception("No reachable or up-to-date workers available for customized mode")
+            best_worker = min(available_workers, key=available_workers.get)
+            print(f"Selected worker for query: {best_worker}")  # Debug logging
             return connect_to_db(next(w for w in WORKERS if w["host"] == best_worker))
         else:
             return connect_to_db(MANAGER)
     else:
         raise ValueError(f"Unknown mode: {mode}")
+
+
 
 
 @app.route("/query", methods=["POST"])
