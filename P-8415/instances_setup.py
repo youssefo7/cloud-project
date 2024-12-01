@@ -1,8 +1,8 @@
 import json
-import boto3
 import paramiko
 import logging
 import os
+import time
 
 # Configure logging
 logging.basicConfig(level=logging.INFO)
@@ -64,10 +64,19 @@ def main():
     setup_dbs_script = 'setup_dbs.sh'
     setup_replication_script = 'setup_replication.sh'
     proxy_script = 'i-proxy.py'
+    gatekeeper_script = 'i-gatekeeper.py'
+    trusted_host_script = 'i-trusted-host.py'
     instance_details_file = 'instance_details.json'
 
     # Check that all required files are present
-    required_files = [setup_dbs_script, setup_replication_script, proxy_script, instance_details_file]
+    required_files = [
+        setup_dbs_script,
+        setup_replication_script,
+        proxy_script,
+        gatekeeper_script,
+        trusted_host_script,
+        instance_details_file
+    ]
     for file in required_files:
         if not os.path.isfile(file):
             logger.error(f"Required file '{file}' not found in the current directory.")
@@ -94,6 +103,8 @@ def main():
         execute_command(ssh_manager, command)
 
         # Retrieve MASTER_LOG_FILE and MASTER_LOG_POS
+        # Wait a bit to ensure MySQL is fully up
+        time.sleep(5)
         command = f"mysql -u root -p'{root_password}' -e 'SHOW MASTER STATUS\\G'"
         exit_status, output, error = execute_command(ssh_manager, command)
         if exit_status != 0:
@@ -169,6 +180,96 @@ def main():
 
     finally:
         ssh_proxy.close()
+
+    # Set up the Gatekeeper instance
+    gatekeeper_ip = INSTANCE_DETAILS['gatekeeper']['public_ips'][0]
+    logger.info(f"Setting up Gatekeeper at IP {gatekeeper_ip}")
+    ssh_gatekeeper = ssh_connect(gatekeeper_ip)
+
+    try:
+        # Transfer instance_details.json to Gatekeeper
+        transfer_file(ssh_gatekeeper, instance_details_file, '/home/ubuntu/instance_details.json')
+
+        # Install necessary packages on Gatekeeper
+        logger.info("Installing necessary packages on Gatekeeper")
+        commands = [
+            'sudo apt-get update',
+            'sudo apt-get install -y python3-pip',
+            'pip3 install flask requests'
+        ]
+        for cmd in commands:
+            execute_command(ssh_gatekeeper, cmd)
+
+        # Transfer gatekeeper.py to Gatekeeper
+        transfer_file(ssh_gatekeeper, gatekeeper_script, '/home/ubuntu/gatekeeper.py')
+
+        # Start gatekeeper.py
+        logger.info("Starting Gatekeeper server")
+        command = 'nohup python3 /home/ubuntu/gatekeeper.py &> gatekeeper.log &'
+        execute_command(ssh_gatekeeper, command)
+
+    finally:
+        ssh_gatekeeper.close()
+
+    # Set up the Trusted Host instance
+    trusted_host_ip = INSTANCE_DETAILS['trusted_host']['public_ips'][0]
+    trusted_host_private_ip = INSTANCE_DETAILS['trusted_host']['private_ips'][0]
+    gatekeeper_private_ip = INSTANCE_DETAILS['gatekeeper']['private_ips'][0]
+    logger.info(f"Setting up Trusted Host at IP {trusted_host_ip}")
+    ssh_trusted_host = ssh_connect(trusted_host_ip)
+
+    try:
+        # Transfer instance_details.json to Trusted Host
+        transfer_file(ssh_trusted_host, instance_details_file, '/home/ubuntu/instance_details.json')
+
+        # Install necessary packages on Trusted Host
+        logger.info("Installing necessary packages on Trusted Host")
+        commands = [
+            'sudo apt-get update',
+            'sudo apt-get install -y python3-pip ufw',
+            'pip3 install flask requests'
+        ]
+        for cmd in commands:
+            execute_command(ssh_trusted_host, cmd)
+
+        # Transfer trusted_host.py to Trusted Host
+        transfer_file(ssh_trusted_host, trusted_host_script, '/home/ubuntu/trusted_host.py')
+
+        # Implement security measures on Trusted Host
+        logger.info("Securing Trusted Host")
+
+        # # Reset UFW to default settings
+        # execute_command(ssh_trusted_host, 'echo "y" | sudo ufw reset')
+
+        # # Deny all incoming connections by default
+        # execute_command(ssh_trusted_host, 'sudo ufw default deny incoming')
+        # execute_command(ssh_trusted_host, 'sudo ufw default allow outgoing')
+
+        # Allow SSH from your IP (optional)
+        # Replace 'your_public_ip' with your actual IP address if needed
+        # execute_command(ssh_trusted_host, 'sudo ufw allow from your_public_ip to any port 22')
+
+        # # Allow incoming connections on port 5000 from Gatekeeper's private IP
+        # execute_command(ssh_trusted_host, f'sudo ufw allow from {gatekeeper_private_ip} to any port 5000')
+
+        # Deny other connections to port 5000
+        # Not necessary since default is deny incoming
+
+        # # Enable UFW
+        # execute_command(ssh_trusted_host, 'sudo ufw --force enable')
+
+        # Disable SSH (optional and only if you have console access)
+        # Be cautious: Disabling SSH can lock you out of the instance
+        # execute_command(ssh_trusted_host, 'sudo systemctl stop ssh')
+        # execute_command(ssh_trusted_host, 'sudo systemctl disable ssh')
+
+        # Start trusted_host.py
+        logger.info("Starting Trusted Host server")
+        command = 'nohup python3 /home/ubuntu/trusted_host.py &> trusted_host.log &'
+        execute_command(ssh_trusted_host, command)
+
+    finally:
+        ssh_trusted_host.close()
 
 if __name__ == '__main__':
     main()

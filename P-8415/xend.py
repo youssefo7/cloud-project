@@ -2,7 +2,7 @@ import requests
 import time
 
 # Proxy Configuration
-PROXY_IP = "44.199.236.111"  # Replace with your proxy's public IP
+PROXY_IP = "34.201.20.117"  # Replace with your proxy's public IP
 PROXY_PORT = 5000            # The port your proxy server is running on
 PROXY_URL = f"http://{PROXY_IP}:{PROXY_PORT}"
 

@@ -1,6 +1,7 @@
 import boto3
 import logging
 import argparse
+import requests
 from botocore.exceptions import ClientError
 
 # Configure logging
@@ -12,46 +13,54 @@ ec2 = boto3.resource('ec2')
 ec2_client = boto3.client('ec2')
 
 # Constants
-KEY_NAME = 'SQL'  
-INSTANCE_TAG_PREFIX = 'MySQLCluster' 
+KEY_NAME = 'SQL'
+INSTANCE_TAG_PREFIX = 'MySQLCluster'
 KEY_FILE_PATH = f'{KEY_NAME}.pem'
-AMI_ID = 'ami-005fc0f236362e99f'  
+AMI_ID = 'ami-005fc0f236362e99f'  # Ubuntu 20.04 LTS in us-east-1
 
-# Updated Security Group Configurations
+# Dynamically retrieve your public IP
+try:
+    YOUR_PUBLIC_IP = requests.get('https://checkip.amazonaws.com').text.strip()
+    logger.info(f"Your public IP: {YOUR_PUBLIC_IP}")
+except requests.RequestException as e:
+    logger.error(f"Failed to retrieve public IP: {e}")
+    YOUR_PUBLIC_IP = "0.0.0.0/0"  # Fallback to allow all traffic if IP retrieval fails
+
+# Updated Security Group Configurations with more permissive rules
 SECURITY_GROUP_CONFIGS = {
     "manager": {
         "Description": "Manager security group",
         "Inbound": [
-            (3306, "worker,proxy"),  # Allow MySQL traffic from worker and proxy
-            (22, "0.0.0.0/0"),       # Allow SSH from anywhere (replace with specific IP/CIDR if possible)
+            (3306, "0.0.0.0/0"),  # Allow MySQL traffic from anywhere
+            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
         ],
     },
     "worker": {
         "Description": "Worker security group",
         "Inbound": [
-            (3306, "proxy"),         # Allow MySQL traffic from proxy
-            (22, "0.0.0.0/0"),       # Allow SSH from anywhere (replace with specific IP/CIDR if possible)
+            (3306, "0.0.0.0/0"),  # Allow MySQL traffic from anywhere
+            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
         ],
     },
     "proxy": {
         "Description": "Proxy security group",
         "Inbound": [
-            (3306, "manager,worker"),  # Allow MySQL traffic from manager and workers
-            (22, "0.0.0.0/0"),         # Allow SSH from anywhere (replace with specific IP/CIDR if possible)
+            (5000, "0.0.0.0/0"),  # Allow traffic from anywhere
+            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
         ],
     },
     "gatekeeper": {
         "Description": "Gatekeeper security group",
         "Inbound": [
-            (5000, "trusted_host,0.0.0.0/0"),  # Allow Gatekeeper traffic from Trusted Host and external access
-            (22, "0.0.0.0/0"),                 # Allow SSH from anywhere (replace with specific IP/CIDR if possible)
+            (5000, "0.0.0.0/0"),  # Allow external access to Gatekeeper
+            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
         ],
     },
     "trusted_host": {
         "Description": "Trusted Host security group",
         "Inbound": [
-            (5000, "gatekeeper"),  # Allow Gatekeeper traffic
-            (22, "0.0.0.0/0"),     # Allow SSH from anywhere (replace with specific IP/CIDR if possible)
+            (5000, "0.0.0.0/0"),  # Allow traffic from anywhere
+            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
         ],
     },
 }
@@ -83,56 +92,28 @@ def create_or_update_security_group(role, description, inbound_rules, security_g
     # Store the security group ID for reference
     security_groups[role] = sg_id
 
-    # Proceed to set ingress rules
-    try:
-        # Revoke existing ingress rules to avoid duplicates
-        current_permissions = ec2_client.describe_security_groups(GroupIds=[sg_id])['SecurityGroups'][0]['IpPermissions']
-        if current_permissions:
-            ec2_client.revoke_security_group_ingress(GroupId=sg_id, IpPermissions=current_permissions)
-            logger.info(f"Revoked existing ingress rules for security group '{role}'")
-    except ClientError as e:
-        if 'InvalidPermission.NotFound' in str(e):
-            logger.info(f"No existing ingress rules to revoke for security group '{role}'")
-        else:
-            logger.error(f"Error revoking existing ingress rules for '{role}': {e}")
-            raise
+    # Revoke existing ingress rules to avoid duplicates
+    current_permissions = ec2_client.describe_security_groups(GroupIds=[sg_id])['SecurityGroups'][0].get('IpPermissions', [])
+    if current_permissions:
+        ec2_client.revoke_security_group_ingress(GroupId=sg_id, IpPermissions=current_permissions)
+        logger.info(f"Revoked existing ingress rules for security group '{role}'")
 
     # Build new ingress rules
     ip_permissions = []
     for rule in inbound_rules:
         port, sources = rule
         for source in sources.split(","):
-            if source == "0.0.0.0/0":
-                ip_permissions.append({
-                    'IpProtocol': 'tcp',
-                    'FromPort': port,
-                    'ToPort': port,
-                    'IpRanges': [{'CidrIp': source}]
-                })
-            elif source in security_groups:
-                ip_permissions.append({
-                    'IpProtocol': 'tcp',
-                    'FromPort': port,
-                    'ToPort': port,
-                    'UserIdGroupPairs': [{'GroupId': security_groups[source]}]
-                })
-            else:
-                logger.warning(f"Security group '{source}' not found. Cannot set ingress rule.")
+            ip_permissions.append({
+                'IpProtocol': 'tcp',
+                'FromPort': port,
+                'ToPort': port,
+                'IpRanges': [{'CidrIp': source}]
+            })
 
     # Authorize new ingress rules
     if ip_permissions:
-        try:
-            ec2_client.authorize_security_group_ingress(
-                GroupId=sg_id,
-                IpPermissions=ip_permissions
-            )
-            logger.info(f"Ingress rules set for security group '{role}'")
-        except ClientError as e:
-            if 'InvalidPermission.Duplicate' in str(e):
-                logger.info(f"Ingress rules for security group '{role}' already exist.")
-            else:
-                logger.error(f"Error setting ingress rules for '{role}': {e}")
-                raise
+        ec2_client.authorize_security_group_ingress(GroupId=sg_id, IpPermissions=ip_permissions)
+        logger.info(f"Ingress rules set for security group '{role}'")
 
     return sg_id
 
@@ -193,22 +174,18 @@ if __name__ == "__main__":
     if args.setup_aws_resources:
         # Setup security groups
         security_groups = {}
-        # First pass to create security groups without rules
         for role, config in SECURITY_GROUP_CONFIGS.items():
-            sg_id = create_or_update_security_group(role, config['Description'], [], security_groups)
-            security_groups[role] = sg_id
-        # Second pass to add ingress rules referencing security groups
-        for role, config in SECURITY_GROUP_CONFIGS.items():
-            create_or_update_security_group(role, config['Description'], config['Inbound'], security_groups)
+            sg_id = create_or_update_security_group(role, config['Description'], config['Inbound'], security_groups)
 
     if args.create_instances:
         # Get the default subnet ID
         default_subnet_id = get_default_subnet_id()
-        if default_subnet_id is None:
+        if not default_subnet_id:
             logger.error("Cannot proceed without a default subnet.")
             exit(1)
+
         # Launch instances and wait for each instance to be ready
-        for role in SECURITY_GROUP_CONFIGS.keys():
+        for role, config in SECURITY_GROUP_CONFIGS.items():
             sg_id = security_groups[role]
             count = 1 if role != "worker" else 2
             instance_type = "t2.large" if role in ["proxy", "gatekeeper", "trusted_host"] else "t2.micro"
