@@ -7,10 +7,10 @@ import time
 from flask import Flask, request
 
 # Configuration
-MANAGER = {"host": "3.87.153.47", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306}
+MANAGER = {"host": "3.91.194.246", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306}
 WORKERS = [
-    {"host": "54.175.178.225", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
-    {"host": "34.226.194.100", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
+    {"host": "34.224.173.230", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
+    {"host": "54.89.156.156", "user": "proxyuser", "password": "proxy", "db": "sakila", "port": 3306},
 ]
 
 app = Flask(__name__)
