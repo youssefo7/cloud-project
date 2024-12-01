@@ -1,21 +1,19 @@
-KEY_NAME = "SQL"
-SECURITY_GROUP_NAME = "SQL"
-INSTANCE_TAG_PREFIX = "MySQLCluster"
-PASSWORD = "password"
-
 # constants.py
 
-# AWS Configuration
-KEY_NAME = 'SQL'
-SECURITY_GROUP_NAME = 'SQL'
-INSTANCE_TAG_PREFIX = 'MySQLCluster'
-KEY_FILE_PATH = f'{KEY_NAME}.pem'
+# Proxy user details
+PROXY_USER = {
+    'name': 'proxyuser',
+    'password': 'proxy_password'
+}
 
-# SSH Configuration
-SSH_USERNAME = 'ubuntu'
+# Replication user details
+REPLICATION_USER = {
+    'name': 'replicator',
+    'password': 'replica_password'
+}
 
-# MySQL Configuration
-ROOT_PASSWORD = 'yous'
-REPL_USER = 'replicator'
-REPL_PASSWORD = 'yous'
-DATABASE_NAME = 'sakila'
+# Database details
+DB_DETAILS = {
+    'db_name': 'sakila',
+    'port': 3306
+}

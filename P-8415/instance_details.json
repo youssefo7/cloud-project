@@ -1,44 +1,56 @@
 {
     "manager": {
         "public_ips": [
-            "3.91.194.246"
+            "3.239.203.146"
         ],
         "private_ips": [
-            "172.31.23.200"
+            "172.31.4.149"
         ]
     },
     "worker": {
         "public_ips": [
-            "34.224.173.230",
-            "54.89.156.156"
+            "3.239.62.76",
+            "44.193.72.247"
         ],
         "private_ips": [
-            "172.31.29.106",
-            "172.31.17.236"
+            "172.31.5.13",
+            "172.31.1.130"
         ]
     },
     "proxy": {
         "public_ips": [
-            "23.22.152.11"
+            "44.199.236.111"
         ],
         "private_ips": [
-            "172.31.23.96"
+            "172.31.10.232"
         ]
     },
     "gatekeeper": {
         "public_ips": [
-            "54.204.115.107"
+            "44.223.80.18"
         ],
         "private_ips": [
-            "172.31.19.104"
+            "172.31.14.12"
         ]
     },
     "trusted_host": {
         "public_ips": [
-            "54.152.212.3"
+            "34.238.28.51"
         ],
         "private_ips": [
-            "172.31.21.4"
+            "172.31.2.70"
         ]
+    },
+    "proxy_user": {
+        "name": "proxyuser",
+        "password": "proxy_password"
+    },
+    "replication_user": {
+        "name": "replicator",
+        "password": "replica_password"
+    },
+    "db_details": {
+        "db_name": "sakila",
+        "port": 3306
     }
 }
