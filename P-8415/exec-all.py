@@ -50,7 +50,7 @@ def main():
     # Continue with other scripts
     scripts_to_run = [
         'instances-info.py',  # Generates instance information
-        'instances_setup.py'  # Sets up instances (e.g., replication, proxy)
+        'instances_setup.py'  # Sets up instances 
     ]
 
     for script in scripts_to_run:

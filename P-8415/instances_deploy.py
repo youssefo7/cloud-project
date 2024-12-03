@@ -19,7 +19,6 @@ INSTANCE_TAG_PREFIX = 'MySQLCluster'
 KEY_FILE_PATH = f'{KEY_NAME}.pem'
 AMI_ID = 'ami-005fc0f236362e99f'  # Ubuntu 20.04 LTS in us-east-1
 
-# Dynamically retrieve your public IP and append CIDR suffix
 try:
     MY_PUBLIC_IP = f"{requests.get('https://checkip.amazonaws.com').text.strip()}/32"
     logger.info(f"Your public IP: {MY_PUBLIC_IP}")
@@ -32,21 +31,21 @@ SECURITY_GROUP_CONFIGS = {
         "Description": "Gatekeeper security group",
         "Inbound": [
             (5000, "0.0.0.0/0"),  # Allow external access to Gatekeeper
-            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
+            (22, MY_PUBLIC_IP),  # Allow SSH from my IP
         ],
     },
     "trusted_host": {
         "Description": "Trusted Host security group",
         "Inbound": [
             (5000, "gatekeeper"),  # Allow traffic from Gatekeeper SG
-            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
+            (22, MY_PUBLIC_IP),  # Allow SSH from my IP
         ],
     },
     "proxy": {
         "Description": "Proxy security group",
         "Inbound": [
             (5000, "trusted_host"),  # Allow traffic from Trusted Host SG
-            (22, MY_PUBLIC_IP),    # Allow SSH from your IP
+            (22, MY_PUBLIC_IP),    # Allow SSH from my IP
         ],
     },
     "manager": {
@@ -54,7 +53,7 @@ SECURITY_GROUP_CONFIGS = {
         "Inbound": [
             (3306, "proxy"),   # Allow MySQL traffic from Proxy SG
             (3306, "worker"),  # Allow MySQL traffic from Worker SG for replication
-            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
+            (22, MY_PUBLIC_IP),  # Allow SSH from my IP
         ],
     },
     "worker": {
@@ -62,7 +61,7 @@ SECURITY_GROUP_CONFIGS = {
         "Inbound": [
             (3306, "proxy"),   # Allow MySQL traffic from Proxy SG
             (3306, "manager"), # Allow MySQL traffic from Manager SG for replication
-            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
+            (22, MY_PUBLIC_IP),  # Allow SSH from my IP
         ],
     },
 }

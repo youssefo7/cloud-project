@@ -9,7 +9,7 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 # Constants
-KEY_NAME = 'SQL'  # Your AWS key pair name
+KEY_NAME = 'SQL'  # My AWS key pair name
 KEY_FILE_PATH = f'{KEY_NAME}.pem'
 SSH_USERNAME = 'ubuntu'  # Default username for Ubuntu instances
 
@@ -58,7 +58,7 @@ def main():
     proxy_user = INSTANCE_DETAILS['proxy_user']['name']
     proxy_password = INSTANCE_DETAILS['proxy_user']['password']
     db_name = INSTANCE_DETAILS['db_details']['db_name']
-    root_password = 'root'  # Set your MySQL root password
+    root_password = 'root' 
 
     # Paths to local scripts
     setup_dbs_script = 'setup_dbs.sh'
