@@ -1,7 +1,6 @@
 from flask import Flask, request, jsonify
 import requests
 import json
-import os
 
 app = Flask(__name__)
 
@@ -26,7 +25,7 @@ TRUSTED_HOST_PRIVATE_IP = INSTANCE_DETAILS['trusted_host']['private_ips'][0]
 TRUSTED_HOST_URL = f"http://{TRUSTED_HOST_PRIVATE_IP}:5000"
 
 # A simple filter for allowed operations
-ALLOWED_OPERATIONS = ["SELECT", "INSERT", "UPDATE", "DELETE", "USE", "SET_MODE", "CREATE", "DROP"]
+ALLOWED_OPERATIONS = ["SELECT", "INSERT", "UPDATE", "DELETE", "SET_MODE"]
 
 @app.route('/filter', methods=['POST'])
 def filter_request():
@@ -41,6 +40,7 @@ def filter_request():
 
     # Check if query starts with an allowed operation
     if not any(normalized_query.startswith(op) for op in ALLOWED_OPERATIONS):
+        app.logger.warning(f"Disallowed operation detected: {query}")
         return jsonify({"error": f"Operation not allowed: {query}"}), 403
 
     # Forward validated query to Trusted Host
@@ -48,8 +48,8 @@ def filter_request():
         response = requests.post(f"{TRUSTED_HOST_URL}/process", json=data)
         return jsonify(response.json()), response.status_code
     except Exception as e:
-        app.logger.error(f"Error forwarding to Trusted Host: {str(e)}")
-        return jsonify({"error": f"Error forwarding to Trusted Host: {str(e)}"}), 500
+        app.logger.error(f"Error forwarding to Trusted Host: {e}")
+        return jsonify({"error": f"Error forwarding to Trusted Host: {e}"}), 500
 
 if __name__ == "__main__":
     app.run(host="0.0.0.0", port=5000)

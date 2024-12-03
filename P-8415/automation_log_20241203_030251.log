@@ -1,61 +1,57 @@
-2024-12-01 17:22:20,702 - INFO - Starting instances_deploy.py with arguments: ('--create-instances', '--setup-aws-resources')
-2024-12-01 17:23:53,588 - INFO - instances_deploy.py completed successfully.
-2024-12-01 17:23:53,588 - INFO - Output:
+2024-12-03 03:02:51,328 - INFO - Starting instances_deploy.py with arguments: ('--create-instances', '--setup-aws-resources')
+2024-12-03 03:04:21,446 - INFO - instances_deploy.py completed successfully.
+2024-12-03 03:04:21,446 - INFO - Output:
 
-2024-12-01 17:23:53,588 - WARNING - Warnings/Errors from instances_deploy.py:
+2024-12-03 03:04:21,446 - WARNING - Warnings/Errors from instances_deploy.py:
 INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
-INFO:__main__:Your public IP: 154.21.251.189
-INFO:__main__:Security group 'manager' already exists with ID: sg-0b664f2e7e3b56e7d
-INFO:__main__:Revoked existing ingress rules for security group 'manager'
-INFO:__main__:Ingress rules set for security group 'manager'
-INFO:__main__:Security group 'worker' already exists with ID: sg-0b62c0d7971ef81ec
-INFO:__main__:Revoked existing ingress rules for security group 'worker'
-INFO:__main__:Ingress rules set for security group 'worker'
-INFO:__main__:Security group 'proxy' already exists with ID: sg-0ebf1c8550f809be7
-INFO:__main__:Revoked existing ingress rules for security group 'proxy'
-INFO:__main__:Ingress rules set for security group 'proxy'
-INFO:__main__:Security group 'gatekeeper' already exists with ID: sg-005272dbee79772b9
-INFO:__main__:Revoked existing ingress rules for security group 'gatekeeper'
-INFO:__main__:Ingress rules set for security group 'gatekeeper'
-INFO:__main__:Security group 'trusted_host' already exists with ID: sg-063d4875a7e3ec56b
-INFO:__main__:Revoked existing ingress rules for security group 'trusted_host'
-INFO:__main__:Ingress rules set for security group 'trusted_host'
+INFO:__main__:Your public IP: 154.21.251.189/32
+INFO:__main__:Key pair 'SQL' already exists.
+INFO:__main__:Created security group 'gatekeeper' with ID: sg-0c400d6590cada74b
+INFO:__main__:Created security group 'trusted_host' with ID: sg-054760cdd07e30196
+INFO:__main__:Created security group 'proxy' with ID: sg-0ce8cd1046e7caaf6
+INFO:__main__:Created security group 'manager' with ID: sg-0b13500ed3a4f5e0a
+INFO:__main__:Created security group 'worker' with ID: sg-029ff47a185021565
+INFO:__main__:Ingress rules set for security group with ID: sg-0c400d6590cada74b
+INFO:__main__:Ingress rules set for security group with ID: sg-054760cdd07e30196
+INFO:__main__:Ingress rules set for security group with ID: sg-0ce8cd1046e7caaf6
+INFO:__main__:Ingress rules set for security group with ID: sg-0b13500ed3a4f5e0a
+INFO:__main__:Ingress rules set for security group with ID: sg-029ff47a185021565
 INFO:__main__:Default subnet ID: subnet-0066a372e9f3e768e
-INFO:__main__:Created instances for role manager: ['i-0e683c1b48a0fcf2a']
-INFO:__main__:Waiting for instance i-0e683c1b48a0fcf2a to enter 'running' state...
-INFO:__main__:Instance i-0e683c1b48a0fcf2a is now running.
-INFO:__main__:Created instances for role worker: ['i-0345c79d179fca3e2', 'i-0363efd1dbfdc58fb']
-INFO:__main__:Waiting for instance i-0345c79d179fca3e2 to enter 'running' state...
-INFO:__main__:Instance i-0345c79d179fca3e2 is now running.
-INFO:__main__:Waiting for instance i-0363efd1dbfdc58fb to enter 'running' state...
-INFO:__main__:Instance i-0363efd1dbfdc58fb is now running.
-INFO:__main__:Created instances for role proxy: ['i-076e49fc8d5732593']
-INFO:__main__:Waiting for instance i-076e49fc8d5732593 to enter 'running' state...
-INFO:__main__:Instance i-076e49fc8d5732593 is now running.
-INFO:__main__:Created instances for role gatekeeper: ['i-0956ef2f64cc9af59']
-INFO:__main__:Waiting for instance i-0956ef2f64cc9af59 to enter 'running' state...
-INFO:__main__:Instance i-0956ef2f64cc9af59 is now running.
-INFO:__main__:Created instances for role trusted_host: ['i-0341932b3be09965e']
-INFO:__main__:Waiting for instance i-0341932b3be09965e to enter 'running' state...
-INFO:__main__:Instance i-0341932b3be09965e is now running.
+INFO:__main__:Created instances for role gatekeeper: ['i-0f7764b829ce1be95']
+INFO:__main__:Waiting for instance i-0f7764b829ce1be95 to enter 'running' state...
+INFO:__main__:Instance i-0f7764b829ce1be95 is now running.
+INFO:__main__:Created instances for role trusted_host: ['i-064e8a757cc7b74c4']
+INFO:__main__:Waiting for instance i-064e8a757cc7b74c4 to enter 'running' state...
+INFO:__main__:Instance i-064e8a757cc7b74c4 is now running.
+INFO:__main__:Created instances for role proxy: ['i-06b914d4a79fd6a71']
+INFO:__main__:Waiting for instance i-06b914d4a79fd6a71 to enter 'running' state...
+INFO:__main__:Instance i-06b914d4a79fd6a71 is now running.
+INFO:__main__:Created instances for role manager: ['i-0691cbbc6d53df9a0']
+INFO:__main__:Waiting for instance i-0691cbbc6d53df9a0 to enter 'running' state...
+INFO:__main__:Instance i-0691cbbc6d53df9a0 is now running.
+INFO:__main__:Created instances for role worker: ['i-0187440aad7ed703e', 'i-07fe752ec90ba4d71']
+INFO:__main__:Waiting for instance i-0187440aad7ed703e to enter 'running' state...
+INFO:__main__:Instance i-0187440aad7ed703e is now running.
+INFO:__main__:Waiting for instance i-07fe752ec90ba4d71 to enter 'running' state...
+INFO:__main__:Instance i-07fe752ec90ba4d71 is now running.
 INFO:__main__:Deployment completed.
 
-2024-12-01 17:23:53,589 - INFO - Starting instances-info.py with arguments: ()
-2024-12-01 17:23:56,545 - INFO - instances-info.py completed successfully.
-2024-12-01 17:23:56,545 - INFO - Output:
+2024-12-03 03:04:21,446 - INFO - Starting instances-info.py with arguments: ()
+2024-12-03 03:04:24,246 - INFO - instances-info.py completed successfully.
+2024-12-03 03:04:24,246 - INFO - Output:
 
-2024-12-01 17:23:56,545 - WARNING - Warnings/Errors from instances-info.py:
+2024-12-03 03:04:24,246 - WARNING - Warnings/Errors from instances-info.py:
 INFO:botocore.credentials:Found credentials in shared credentials file: ~/.aws/credentials
 INFO:__main__:Instance details saved to 'instance_details.json'.
 INFO:__main__:Instance details updated in global variable.
 
-2024-12-01 17:23:56,545 - INFO - Starting instances_setup.py with arguments: ()
-2024-12-01 17:29:57,629 - INFO - instances_setup.py completed successfully.
-2024-12-01 17:29:57,629 - INFO - Output:
+2024-12-03 03:04:24,246 - INFO - Starting instances_setup.py with arguments: ()
+2024-12-03 03:11:56,540 - INFO - instances_setup.py completed successfully.
+2024-12-03 03:11:56,540 - INFO - Output:
 
-2024-12-01 17:29:57,629 - WARNING - Warnings/Errors from instances_setup.py:
-INFO:__main__:Setting up manager at IP 44.195.68.203
-INFO:__main__:Connecting to 44.195.68.203 as ubuntu
+2024-12-03 03:11:56,540 - WARNING - Warnings/Errors from instances_setup.py:
+INFO:__main__:Setting up manager at IP 3.239.109.57
+INFO:__main__:Connecting to 3.239.109.57 as ubuntu
 INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.9p1)
 INFO:paramiko.transport:Authentication (publickey) successful!
 INFO:paramiko.transport.sftp:[chan 0] Opened sftp connection (server version 3)
@@ -72,13 +68,13 @@ Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease [12
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
 Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
 Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
-Get:6 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
-Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
-Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
-Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
-Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
-Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2179 kB]
-Get:12 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
+Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
+Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
+Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
+Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2180 kB]
 Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
 Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
 Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
@@ -109,7 +105,7 @@ Get:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Met
 Get:40 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.6 kB]
 Get:41 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [8260 B]
 Get:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [224 B]
-Fetched 34.7 MB in 7s (4686 kB/s)
+Fetched 34.7 MB in 7s (4863 kB/s)
 Reading package lists...
 Installing MySQL Server...
 Reading package lists...
@@ -173,7 +169,7 @@ debconf: unable to initialize frontend: Readline
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
-Fetched 29.6 MB in 0s (67.7 MB/s)
+Fetched 29.6 MB in 0s (66.0 MB/s)
 Selecting previously unselected package mysql-common.
 
 (Reading database ... 
@@ -1020,7 +1016,7 @@ Renaming removed key_buffer and myisam-recover options (if present)
 
 mysqld will log errors to /var/log/mysql/error.log
 
-mysqld is running as pid 2100
+mysqld is running as pid 2103
 
 Created symlink /etc/systemd/system/multi-user.target.wants/mysql.service \u2192 /lib/systemd/system/mysql.service.
 
@@ -1052,30 +1048,30 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Installing Sakila database...
---2024-12-01 22:24:50--  https://downloads.mysql.com/docs/sakila-db.tar.gz
-Resolving downloads.mysql.com (downloads.mysql.com)... 23.218.131.64, 2600:1408:c400:188c::2e31, 2600:1408:c400:1881::2e31
+--2024-12-03 08:05:26--  https://downloads.mysql.com/docs/sakila-db.tar.gz
+Resolving downloads.mysql.com (downloads.mysql.com)... 23.218.131.64, 2600:1408:c400:1881::2e31, 2600:1408:c400:188c::2e31
 Connecting to downloads.mysql.com (downloads.mysql.com)|23.218.131.64|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 732426 (715K) [application/x-gzip]
 Saving to: ‘sakila-db.tar.gz’
 
-     0K .......... .......... .......... .......... ..........  6%  554K 1s
-    50K .......... .......... .......... .......... .......... 13%  741K 1s
-   100K .......... .......... .......... .......... .......... 20% 7.21M 1s
-   150K .......... .......... .......... .......... .......... 27% 1002K 1s
-   200K .......... .......... .......... .......... .......... 34% 1.82M 0s
-   250K .......... .......... .......... .......... .......... 41% 65.3M 0s
-   300K .......... .......... .......... .......... .......... 48% 1.38M 0s
-   350K .......... .......... .......... .......... .......... 55%  112M 0s
-   400K .......... .......... .......... .......... .......... 62% 40.8M 0s
-   450K .......... .......... .......... .......... .......... 69%  126M 0s
-   500K .......... .......... .......... .......... .......... 76% 4.85M 0s
-   550K .......... .......... .......... .......... .......... 83% 47.5M 0s
-   600K .......... .......... .......... .......... .......... 90% 7.31M 0s
-   650K .......... .......... .......... .......... .......... 97%  982K 0s
-   700K .......... .....                                      100%  221M=0.3s
+     0K .......... .......... .......... .......... ..........  6% 26.3M 0s
+    50K .......... .......... .......... .......... .......... 13% 10.5M 0s
+   100K .......... .......... .......... .......... .......... 20% 20.5M 0s
+   150K .......... .......... .......... .......... .......... 27% 2.58M 0s
+   200K .......... .......... .......... .......... .......... 34%  987K 0s
+   250K .......... .......... .......... .......... .......... 41%  137M 0s
+   300K .......... .......... .......... .......... .......... 48%  451K 0s
+   350K .......... .......... .......... .......... .......... 55% 63.6M 0s
+   400K .......... .......... .......... .......... .......... 62%  132M 0s
+   450K .......... .......... .......... .......... .......... 69% 62.9M 0s
+   500K .......... .......... .......... .......... .......... 76%  352M 0s
+   550K .......... .......... .......... .......... .......... 83% 68.2M 0s
+   600K .......... .......... .......... .......... .......... 90% 46.9M 0s
+   650K .......... .......... .......... .......... .......... 97%  145M 0s
+   700K .......... .....                                      100%  393M=0.2s
 
-2024-12-01 22:24:51 (2.01 MB/s) - ‘sakila-db.tar.gz’ saved [732426/732426]
+2024-12-03 08:05:27 (3.60 MB/s) - ‘sakila-db.tar.gz’ saved [732426/732426]
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -1089,12 +1085,12 @@ The following additional packages will be installed:
 The following NEW packages will be installed:
   libluajit-5.1-2 libluajit-5.1-common libmysqlclient21 libpq5 sysbench
 0 upgraded, 5 newly installed, 0 to remove and 30 not upgraded.
-Need to get 1859 kB of archives.
-After this operation, 8463 kB of additional disk space will be used.
+Need to get 1860 kB of archives.
+After this operation, 8467 kB of additional disk space will be used.
 Get:1 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 libluajit-5.1-common all 2.1.0~beta3+dfsg-6 [44.3 kB]
 Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 libluajit-5.1-2 amd64 2.1.0~beta3+dfsg-6 [238 kB]
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libmysqlclient21 amd64 8.0.40-0ubuntu0.22.04.1 [1308 kB]
-Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpq5 amd64 14.13-0ubuntu0.22.04.1 [149 kB]
+Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpq5 amd64 14.15-0ubuntu0.22.04.1 [150 kB]
 Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 sysbench amd64 1.0.20+ds-2 [120 kB]
 debconf: unable to initialize frontend: Dialog
 debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
@@ -1103,7 +1099,7 @@ debconf: unable to initialize frontend: Readline
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
-Fetched 1859 kB in 0s (30.2 MB/s)
+Fetched 1860 kB in 0s (25.7 MB/s)
 Selecting previously unselected package libluajit-5.1-common.
 
 (Reading database ... 
@@ -1147,9 +1143,9 @@ Unpacking libmysqlclient21:amd64 (8.0.40-0ubuntu0.22.04.1) ...
 
 Selecting previously unselected package libpq5:amd64.
 
-Preparing to unpack .../libpq5_14.13-0ubuntu0.22.04.1_amd64.deb ...
+Preparing to unpack .../libpq5_14.15-0ubuntu0.22.04.1_amd64.deb ...
 
-Unpacking libpq5:amd64 (14.13-0ubuntu0.22.04.1) ...
+Unpacking libpq5:amd64 (14.15-0ubuntu0.22.04.1) ...
 
 Selecting previously unselected package sysbench.
 
@@ -1159,7 +1155,7 @@ Unpacking sysbench (1.0.20+ds-2) ...
 
 Setting up libmysqlclient21:amd64 (8.0.40-0ubuntu0.22.04.1) ...
 
-Setting up libpq5:amd64 (14.13-0ubuntu0.22.04.1) ...
+Setting up libpq5:amd64 (14.15-0ubuntu0.22.04.1) ...
 
 Setting up libluajit-5.1-common (2.1.0~beta3+dfsg-6) ...
 
@@ -1200,29 +1196,29 @@ Threads started!
 
 SQL statistics:
     queries performed:
-        read:                            116088
+        read:                            119238
         write:                           0
-        other:                           16584
-        total:                           132672
-    transactions:                        8292   (828.98 per sec.)
-    queries:                             132672 (13263.75 per sec.)
+        other:                           17034
+        total:                           136272
+    transactions:                        8517   (851.43 per sec.)
+    queries:                             136272 (13622.83 per sec.)
     ignored errors:                      0      (0.00 per sec.)
     reconnects:                          0      (0.00 per sec.)
 
 General statistics:
-    total time:                          10.0008s
-    total number of events:              8292
+    total time:                          10.0011s
+    total number of events:              8517
 
 Latency (ms):
-         min:                                    0.81
-         avg:                                    1.20
-         max:                                   11.40
-         95th percentile:                        1.96
-         sum:                                 9973.96
+         min:                                    0.80
+         avg:                                    1.17
+         max:                                   12.04
+         95th percentile:                        1.93
+         sum:                                 9972.12
 
 Threads fairness:
-    events (avg/stddev):           8292.0000/0.00
-    execution time (avg/stddev):   9.9740/0.00
+    events (avg/stddev):           8517.0000/0.00
+    execution time (avg/stddev):   9.9721/0.00
 
 MySQL setup and benchmarking complete.
 
@@ -1231,17 +1227,17 @@ INFO:paramiko.transport.sftp:[chan 3] sftp session closed.
 INFO:__main__:Transferred setup_replication.sh to /home/ubuntu/setup_replication.sh
 INFO:__main__:Executing command: sudo bash /home/ubuntu/setup_replication.sh manager "" "" "" root replicator replica_password proxyuser proxy_password
 INFO:__main__:Command executed successfully. Output:
-2024-12-01 22:25:10 - Configuring as Manager...
-2024-12-01 22:25:12 - Waiting for MySQL to be ready...
+2024-12-03 08:05:52 - Configuring as Manager...
+2024-12-03 08:05:54 - Waiting for MySQL to be ready...
 mysqld is alive
-2024-12-01 22:25:12 - MySQL is ready.
-2024-12-01 22:25:13 - Master Status: *************************** 1. row ***************************
+2024-12-03 08:05:54 - MySQL is ready.
+2024-12-03 08:05:54 - Master Status: *************************** 1. row ***************************
              File: mysql-bin.000001
-         Position: 1873
+         Position: 1874
      Binlog_Do_DB: 
  Binlog_Ignore_DB: mysql
 Executed_Gtid_Set: 
-2024-12-01 22:25:13 - manager configuration complete.
+2024-12-03 08:05:54 - manager configuration complete.
 
 WARNING:__main__:Command generated warnings:
 mysqladmin: [Warning] Using a password on the command line interface can be insecure.
@@ -1253,7 +1249,7 @@ INFO:__main__:Executing command: mysql -u root -p'root' -e 'SHOW MASTER STATUS\G
 INFO:__main__:Command executed successfully. Output:
 *************************** 1. row ***************************
              File: mysql-bin.000001
-         Position: 1873
+         Position: 1874
      Binlog_Do_DB: 
  Binlog_Ignore_DB: mysql
 Executed_Gtid_Set: 
@@ -1262,8 +1258,8 @@ WARNING:__main__:Command generated warnings:
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
 INFO:__main__:Retrieved master status from manager
-INFO:__main__:Setting up worker at IP 3.232.107.242
-INFO:__main__:Connecting to 3.232.107.242 as ubuntu
+INFO:__main__:Setting up worker at IP 44.199.255.211
+INFO:__main__:Connecting to 44.199.255.211 as ubuntu
 INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.9p1)
 INFO:paramiko.transport:Authentication (publickey) successful!
 INFO:paramiko.transport.sftp:[chan 0] Opened sftp connection (server version 3)
@@ -1285,27 +1281,27 @@ Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f 
 Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
 Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
 Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
-Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2179 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2180 kB]
 Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
 Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
 Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
 Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [466 kB]
 Get:16 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
 Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
-Get:18 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
-Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
-Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
-Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [11.4 kB]
-Get:22 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [440 B]
-Get:23 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.7 kB]
-Get:24 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.1 kB]
-Get:25 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
-Get:26 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
-Get:27 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.9 kB]
-Get:28 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.5 kB]
-Get:29 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
-Get:30 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
-Get:31 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:18 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
+Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
+Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
+Get:22 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [11.4 kB]
+Get:23 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [440 B]
+Get:24 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.7 kB]
+Get:25 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.1 kB]
+Get:26 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
+Get:27 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
+Get:28 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.9 kB]
+Get:29 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.5 kB]
+Get:30 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
+Get:31 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
 Get:32 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [313 kB]
 Get:33 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [13.3 kB]
 Get:34 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [2611 kB]
@@ -1317,7 +1313,7 @@ Get:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Met
 Get:40 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.6 kB]
 Get:41 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [8260 B]
 Get:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [224 B]
-Fetched 34.7 MB in 16s (2130 kB/s)
+Fetched 34.7 MB in 16s (2166 kB/s)
 Reading package lists...
 Installing MySQL Server...
 Reading package lists...
@@ -1381,7 +1377,7 @@ debconf: unable to initialize frontend: Readline
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
-Fetched 29.6 MB in 0s (72.8 MB/s)
+Fetched 29.6 MB in 0s (66.3 MB/s)
 Selecting previously unselected package mysql-common.
 
 (Reading database ... 
@@ -2228,7 +2224,7 @@ Renaming removed key_buffer and myisam-recover options (if present)
 
 mysqld will log errors to /var/log/mysql/error.log
 
-mysqld is running as pid 2100
+mysqld is running as pid 2102
 
 Created symlink /etc/systemd/system/multi-user.target.wants/mysql.service \u2192 /lib/systemd/system/mysql.service.
 
@@ -2260,30 +2256,30 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Installing Sakila database...
---2024-12-01 22:26:13--  https://downloads.mysql.com/docs/sakila-db.tar.gz
-Resolving downloads.mysql.com (downloads.mysql.com)... 23.218.131.64, 2600:1408:c400:188c::2e31, 2600:1408:c400:1881::2e31
-Connecting to downloads.mysql.com (downloads.mysql.com)|23.218.131.64|:443... connected.
+--2024-12-03 08:07:12--  https://downloads.mysql.com/docs/sakila-db.tar.gz
+Resolving downloads.mysql.com (downloads.mysql.com)... 23.49.176.249, 2600:1408:c400:188c::2e31, 2600:1408:c400:1881::2e31
+Connecting to downloads.mysql.com (downloads.mysql.com)|23.49.176.249|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 732426 (715K) [application/x-gzip]
 Saving to: ‘sakila-db.tar.gz’
 
-     0K .......... .......... .......... .......... ..........  6%  454K 1s
-    50K .......... .......... .......... .......... .......... 13%  674K 1s
-   100K .......... .......... .......... .......... .......... 20%  816K 1s
-   150K .......... .......... .......... .......... .......... 27%  746K 1s
-   200K .......... .......... .......... .......... .......... 34% 73.1M 1s
-   250K .......... .......... .......... .......... .......... 41% 33.0M 0s
-   300K .......... .......... .......... .......... .......... 48% 41.8M 0s
-   350K .......... .......... .......... .......... .......... 55% 1.24M 0s
-   400K .......... .......... .......... .......... .......... 62% 30.6M 0s
-   450K .......... .......... .......... .......... .......... 69%  310M 0s
-   500K .......... .......... .......... .......... .......... 76% 28.0M 0s
-   550K .......... .......... .......... .......... .......... 83% 4.30M 0s
-   600K .......... .......... .......... .......... .......... 90% 7.92M 0s
-   650K .......... .......... .......... .......... .......... 97%  461M 0s
-   700K .......... .....                                      100%  391M=0.4s
+     0K .......... .......... .......... .......... ..........  6% 3.41M 0s
+    50K .......... .......... .......... .......... .......... 13%  886K 0s
+   100K .......... .......... .......... .......... .......... 20% 4.46M 0s
+   150K .......... .......... .......... .......... .......... 27% 1.24M 0s
+   200K .......... .......... .......... .......... .......... 34% 11.5M 0s
+   250K .......... .......... .......... .......... .......... 41% 3.86M 0s
+   300K .......... .......... .......... .......... .......... 48% 4.10M 0s
+   350K .......... .......... .......... .......... .......... 55% 5.37M 0s
+   400K .......... .......... .......... .......... .......... 62% 6.98M 0s
+   450K .......... .......... .......... .......... .......... 69% 2.12M 0s
+   500K .......... .......... .......... .......... .......... 76%  148M 0s
+   550K .......... .......... .......... .......... .......... 83% 7.70M 0s
+   600K .......... .......... .......... .......... .......... 90% 21.1M 0s
+   650K .......... .......... .......... .......... .......... 97% 18.5M 0s
+   700K .......... .....                                      100% 5.65M=0.2s
 
-2024-12-01 22:26:14 (1.85 MB/s) - ‘sakila-db.tar.gz’ saved [732426/732426]
+2024-12-03 08:07:12 (3.44 MB/s) - ‘sakila-db.tar.gz’ saved [732426/732426]
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -2297,12 +2293,12 @@ The following additional packages will be installed:
 The following NEW packages will be installed:
   libluajit-5.1-2 libluajit-5.1-common libmysqlclient21 libpq5 sysbench
 0 upgraded, 5 newly installed, 0 to remove and 30 not upgraded.
-Need to get 1859 kB of archives.
-After this operation, 8463 kB of additional disk space will be used.
+Need to get 1860 kB of archives.
+After this operation, 8467 kB of additional disk space will be used.
 Get:1 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 libluajit-5.1-common all 2.1.0~beta3+dfsg-6 [44.3 kB]
 Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 libluajit-5.1-2 amd64 2.1.0~beta3+dfsg-6 [238 kB]
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libmysqlclient21 amd64 8.0.40-0ubuntu0.22.04.1 [1308 kB]
-Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpq5 amd64 14.13-0ubuntu0.22.04.1 [149 kB]
+Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpq5 amd64 14.15-0ubuntu0.22.04.1 [150 kB]
 Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 sysbench amd64 1.0.20+ds-2 [120 kB]
 debconf: unable to initialize frontend: Dialog
 debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
@@ -2311,7 +2307,7 @@ debconf: unable to initialize frontend: Readline
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
-Fetched 1859 kB in 0s (33.2 MB/s)
+Fetched 1860 kB in 0s (30.9 MB/s)
 Selecting previously unselected package libluajit-5.1-common.
 
 (Reading database ... 
@@ -2355,9 +2351,9 @@ Unpacking libmysqlclient21:amd64 (8.0.40-0ubuntu0.22.04.1) ...
 
 Selecting previously unselected package libpq5:amd64.
 
-Preparing to unpack .../libpq5_14.13-0ubuntu0.22.04.1_amd64.deb ...
+Preparing to unpack .../libpq5_14.15-0ubuntu0.22.04.1_amd64.deb ...
 
-Unpacking libpq5:amd64 (14.13-0ubuntu0.22.04.1) ...
+Unpacking libpq5:amd64 (14.15-0ubuntu0.22.04.1) ...
 
 Selecting previously unselected package sysbench.
 
@@ -2367,7 +2363,7 @@ Unpacking sysbench (1.0.20+ds-2) ...
 
 Setting up libmysqlclient21:amd64 (8.0.40-0ubuntu0.22.04.1) ...
 
-Setting up libpq5:amd64 (14.13-0ubuntu0.22.04.1) ...
+Setting up libpq5:amd64 (14.15-0ubuntu0.22.04.1) ...
 
 Setting up libluajit-5.1-common (2.1.0~beta3+dfsg-6) ...
 
@@ -2408,49 +2404,49 @@ Threads started!
 
 SQL statistics:
     queries performed:
-        read:                            120246
+        read:                            119140
         write:                           0
-        other:                           17178
-        total:                           137424
-    transactions:                        8589   (858.60 per sec.)
-    queries:                             137424 (13737.63 per sec.)
+        other:                           17020
+        total:                           136160
+    transactions:                        8510   (850.73 per sec.)
+    queries:                             136160 (13611.63 per sec.)
     ignored errors:                      0      (0.00 per sec.)
     reconnects:                          0      (0.00 per sec.)
 
 General statistics:
-    total time:                          10.0018s
-    total number of events:              8589
+    total time:                          10.0015s
+    total number of events:              8510
 
 Latency (ms):
          min:                                    0.81
-         avg:                                    1.16
-         max:                                   11.52
+         avg:                                    1.17
+         max:                                   11.51
          95th percentile:                        1.96
-         sum:                                 9974.75
+         sum:                                 9973.10
 
 Threads fairness:
-    events (avg/stddev):           8589.0000/0.00
-    execution time (avg/stddev):   9.9747/0.00
+    events (avg/stddev):           8510.0000/0.00
+    execution time (avg/stddev):   9.9731/0.00
 
 MySQL setup and benchmarking complete.
 
 INFO:paramiko.transport.sftp:[chan 3] Opened sftp connection (server version 3)
 INFO:paramiko.transport.sftp:[chan 3] sftp session closed.
 INFO:__main__:Transferred setup_replication.sh to /home/ubuntu/setup_replication.sh
-INFO:__main__:Executing command: sudo bash /home/ubuntu/setup_replication.sh worker 172.31.7.175 mysql-bin.000001 1873 root replicator replica_password proxyuser proxy_password
+INFO:__main__:Executing command: sudo bash /home/ubuntu/setup_replication.sh worker 172.31.11.15 mysql-bin.000001 1874 root replicator replica_password proxyuser proxy_password
 INFO:__main__:Command executed successfully. Output:
-2024-12-01 22:26:34 - Configuring as Worker...
-2024-12-01 22:26:36 - Waiting for MySQL to be ready...
+2024-12-03 08:07:32 - Configuring as Worker...
+2024-12-03 08:07:34 - Waiting for MySQL to be ready...
 mysqld is alive
-2024-12-01 22:26:36 - MySQL is ready.
-2024-12-01 22:26:36 - Slave Status: *************************** 1. row ***************************
+2024-12-03 08:07:34 - MySQL is ready.
+2024-12-03 08:07:34 - Slave Status: *************************** 1. row ***************************
                Slave_IO_State: Queueing source event to the relay log
-                  Master_Host: 172.31.7.175
+                  Master_Host: 172.31.11.15
                   Master_User: replicator
                   Master_Port: 3306
                 Connect_Retry: 60
               Master_Log_File: mysql-bin.000001
-          Read_Master_Log_Pos: 1873
+          Read_Master_Log_Pos: 1874
                Relay_Log_File: mysql-relay-bin.000001
                 Relay_Log_Pos: 4
         Relay_Master_Log_File: mysql-bin.000001
@@ -2465,7 +2461,7 @@ mysqld is alive
                    Last_Errno: 0
                    Last_Error: 
                  Skip_Counter: 0
-          Exec_Master_Log_Pos: 1873
+          Exec_Master_Log_Pos: 1874
               Relay_Log_Space: 157
               Until_Condition: None
                Until_Log_File: 
@@ -2484,7 +2480,7 @@ Master_SSL_Verify_Server_Cert: No
                Last_SQL_Error: 
   Replicate_Ignore_Server_Ids: 
              Master_Server_Id: 1
-                  Master_UUID: 0516c117-b033-11ef-93b7-02462b7288c1
+                  Master_UUID: 4bb446c4-b14d-11ef-a393-02993aca765b
              Master_Info_File: mysql.slave_master_info
                     SQL_Delay: 0
           SQL_Remaining_Delay: NULL
@@ -2504,7 +2500,7 @@ Master_SSL_Verify_Server_Cert: No
        Master_public_key_path: 
         Get_master_public_key: 1
             Network_Namespace: 
-2024-12-01 22:26:36 - worker configuration complete.
+2024-12-03 08:07:34 - worker configuration complete.
 
 WARNING:__main__:Command generated warnings:
 mysqladmin: [Warning] Using a password on the command line interface can be insecure.
@@ -2513,8 +2509,8 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-INFO:__main__:Setting up worker at IP 44.223.92.182
-INFO:__main__:Connecting to 44.223.92.182 as ubuntu
+INFO:__main__:Setting up worker at IP 44.201.30.29
+INFO:__main__:Connecting to 44.201.30.29 as ubuntu
 INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.9p1)
 INFO:paramiko.transport:Authentication (publickey) successful!
 INFO:paramiko.transport.sftp:[chan 0] Opened sftp connection (server version 3)
@@ -2531,13 +2527,13 @@ Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease [12
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
 Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
 Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
-Get:6 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
-Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
-Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
-Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
-Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
-Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2179 kB]
-Get:12 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
+Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
+Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
+Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
+Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2180 kB]
 Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
 Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
 Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
@@ -2568,7 +2564,7 @@ Get:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Met
 Get:40 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.6 kB]
 Get:41 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [8260 B]
 Get:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [224 B]
-Fetched 34.7 MB in 6s (5435 kB/s)
+Fetched 34.7 MB in 17s (2094 kB/s)
 Reading package lists...
 Installing MySQL Server...
 Reading package lists...
@@ -2632,7 +2628,7 @@ debconf: unable to initialize frontend: Readline
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
-Fetched 29.6 MB in 0s (62.7 MB/s)
+Fetched 29.6 MB in 0s (69.3 MB/s)
 Selecting previously unselected package mysql-common.
 
 (Reading database ... 
@@ -3479,7 +3475,7 @@ Renaming removed key_buffer and myisam-recover options (if present)
 
 mysqld will log errors to /var/log/mysql/error.log
 
-mysqld is running as pid 2106
+mysqld is running as pid 2102
 
 Created symlink /etc/systemd/system/multi-user.target.wants/mysql.service \u2192 /lib/systemd/system/mysql.service.
 
@@ -3511,30 +3507,30 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 Installing Sakila database...
---2024-12-01 22:27:27--  https://downloads.mysql.com/docs/sakila-db.tar.gz
-Resolving downloads.mysql.com (downloads.mysql.com)... 23.218.131.64, 2600:1408:c400:1881::2e31, 2600:1408:c400:188c::2e31
-Connecting to downloads.mysql.com (downloads.mysql.com)|23.218.131.64|:443... connected.
+--2024-12-03 08:08:53--  https://downloads.mysql.com/docs/sakila-db.tar.gz
+Resolving downloads.mysql.com (downloads.mysql.com)... 23.49.176.249, 2600:1408:c400:1881::2e31, 2600:1408:c400:188c::2e31
+Connecting to downloads.mysql.com (downloads.mysql.com)|23.49.176.249|:443... connected.
 HTTP request sent, awaiting response... 200 OK
 Length: 732426 (715K) [application/x-gzip]
 Saving to: ‘sakila-db.tar.gz’
 
-     0K .......... .......... .......... .......... ..........  6%  203K 3s
-    50K .......... .......... .......... .......... .......... 13% 16.8M 2s
-   100K .......... .......... .......... .......... .......... 20% 1.21M 1s
-   150K .......... .......... .......... .......... .......... 27%  843K 1s
-   200K .......... .......... .......... .......... .......... 34% 11.8M 1s
-   250K .......... .......... .......... .......... .......... 41% 16.6M 0s
-   300K .......... .......... .......... .......... .......... 48%  910K 0s
-   350K .......... .......... .......... .......... .......... 55% 22.5M 0s
-   400K .......... .......... .......... .......... .......... 62% 26.4M 0s
-   450K .......... .......... .......... .......... .......... 69% 38.7M 0s
-   500K .......... .......... .......... .......... .......... 76% 34.5M 0s
-   550K .......... .......... .......... .......... .......... 83% 30.0M 0s
-   600K .......... .......... .......... .......... .......... 90% 54.8M 0s
-   650K .......... .......... .......... .......... .......... 97%  954K 0s
-   700K .......... .....                                      100%  327M=0.5s
+     0K .......... .......... .......... .......... ..........  6% 96.2M 0s
+    50K .......... .......... .......... .......... .......... 13% 10.9M 0s
+   100K .......... .......... .......... .......... .......... 20% 2.48M 0s
+   150K .......... .......... .......... .......... .......... 27% 1.90M 0s
+   200K .......... .......... .......... .......... .......... 34% 2.44M 0s
+   250K .......... .......... .......... .......... .......... 41% 6.05M 0s
+   300K .......... .......... .......... .......... .......... 48% 4.70M 0s
+   350K .......... .......... .......... .......... .......... 55% 5.53M 0s
+   400K .......... .......... .......... .......... .......... 62% 7.04M 0s
+   450K .......... .......... .......... .......... .......... 69% 6.60M 0s
+   500K .......... .......... .......... .......... .......... 76% 7.09M 0s
+   550K .......... .......... .......... .......... .......... 83% 6.96M 0s
+   600K .......... .......... .......... .......... .......... 90% 5.28M 0s
+   650K .......... .......... .......... .......... .......... 97% 35.8M 0s
+   700K .......... .....                                      100% 2.93M=0.1s
 
-2024-12-01 22:27:28 (1.48 MB/s) - ‘sakila-db.tar.gz’ saved [732426/732426]
+2024-12-03 08:08:54 (4.93 MB/s) - ‘sakila-db.tar.gz’ saved [732426/732426]
 
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
@@ -3548,12 +3544,12 @@ The following additional packages will be installed:
 The following NEW packages will be installed:
   libluajit-5.1-2 libluajit-5.1-common libmysqlclient21 libpq5 sysbench
 0 upgraded, 5 newly installed, 0 to remove and 30 not upgraded.
-Need to get 1859 kB of archives.
-After this operation, 8463 kB of additional disk space will be used.
+Need to get 1860 kB of archives.
+After this operation, 8467 kB of additional disk space will be used.
 Get:1 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 libluajit-5.1-common all 2.1.0~beta3+dfsg-6 [44.3 kB]
 Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 libluajit-5.1-2 amd64 2.1.0~beta3+dfsg-6 [238 kB]
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libmysqlclient21 amd64 8.0.40-0ubuntu0.22.04.1 [1308 kB]
-Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpq5 amd64 14.13-0ubuntu0.22.04.1 [149 kB]
+Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 libpq5 amd64 14.15-0ubuntu0.22.04.1 [150 kB]
 Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 sysbench amd64 1.0.20+ds-2 [120 kB]
 debconf: unable to initialize frontend: Dialog
 debconf: (Dialog frontend will not work on a dumb terminal, an emacs shell buffer, or without a controlling terminal.)
@@ -3562,7 +3558,7 @@ debconf: unable to initialize frontend: Readline
 debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
-Fetched 1859 kB in 0s (36.4 MB/s)
+Fetched 1860 kB in 0s (26.5 MB/s)
 Selecting previously unselected package libluajit-5.1-common.
 
 (Reading database ... 
@@ -3606,9 +3602,9 @@ Unpacking libmysqlclient21:amd64 (8.0.40-0ubuntu0.22.04.1) ...
 
 Selecting previously unselected package libpq5:amd64.
 
-Preparing to unpack .../libpq5_14.13-0ubuntu0.22.04.1_amd64.deb ...
+Preparing to unpack .../libpq5_14.15-0ubuntu0.22.04.1_amd64.deb ...
 
-Unpacking libpq5:amd64 (14.13-0ubuntu0.22.04.1) ...
+Unpacking libpq5:amd64 (14.15-0ubuntu0.22.04.1) ...
 
 Selecting previously unselected package sysbench.
 
@@ -3618,7 +3614,7 @@ Unpacking sysbench (1.0.20+ds-2) ...
 
 Setting up libmysqlclient21:amd64 (8.0.40-0ubuntu0.22.04.1) ...
 
-Setting up libpq5:amd64 (14.13-0ubuntu0.22.04.1) ...
+Setting up libpq5:amd64 (14.15-0ubuntu0.22.04.1) ...
 
 Setting up libluajit-5.1-common (2.1.0~beta3+dfsg-6) ...
 
@@ -3659,49 +3655,49 @@ Threads started!
 
 SQL statistics:
     queries performed:
-        read:                            118426
+        read:                            119728
         write:                           0
-        other:                           16918
-        total:                           135344
-    transactions:                        8459   (845.67 per sec.)
-    queries:                             135344 (13530.68 per sec.)
+        other:                           17104
+        total:                           136832
+    transactions:                        8552   (854.92 per sec.)
+    queries:                             136832 (13678.70 per sec.)
     ignored errors:                      0      (0.00 per sec.)
     reconnects:                          0      (0.00 per sec.)
 
 General statistics:
-    total time:                          10.0005s
-    total number of events:              8459
+    total time:                          10.0007s
+    total number of events:              8552
 
 Latency (ms):
          min:                                    0.81
-         avg:                                    1.18
-         max:                                   10.99
+         avg:                                    1.17
+         max:                                    8.45
          95th percentile:                        1.93
-         sum:                                 9972.81
+         sum:                                 9972.58
 
 Threads fairness:
-    events (avg/stddev):           8459.0000/0.00
-    execution time (avg/stddev):   9.9728/0.00
+    events (avg/stddev):           8552.0000/0.00
+    execution time (avg/stddev):   9.9726/0.00
 
 MySQL setup and benchmarking complete.
 
 INFO:paramiko.transport.sftp:[chan 3] Opened sftp connection (server version 3)
 INFO:paramiko.transport.sftp:[chan 3] sftp session closed.
 INFO:__main__:Transferred setup_replication.sh to /home/ubuntu/setup_replication.sh
-INFO:__main__:Executing command: sudo bash /home/ubuntu/setup_replication.sh worker 172.31.7.175 mysql-bin.000001 1873 root replicator replica_password proxyuser proxy_password
+INFO:__main__:Executing command: sudo bash /home/ubuntu/setup_replication.sh worker 172.31.11.15 mysql-bin.000001 1874 root replicator replica_password proxyuser proxy_password
 INFO:__main__:Command executed successfully. Output:
-2024-12-01 22:27:48 - Configuring as Worker...
-2024-12-01 22:27:50 - Waiting for MySQL to be ready...
+2024-12-03 08:09:19 - Configuring as Worker...
+2024-12-03 08:09:21 - Waiting for MySQL to be ready...
 mysqld is alive
-2024-12-01 22:27:50 - MySQL is ready.
-2024-12-01 22:27:50 - Slave Status: *************************** 1. row ***************************
+2024-12-03 08:09:21 - MySQL is ready.
+2024-12-03 08:09:22 - Slave Status: *************************** 1. row ***************************
                Slave_IO_State: Queueing source event to the relay log
-                  Master_Host: 172.31.7.175
+                  Master_Host: 172.31.11.15
                   Master_User: replicator
                   Master_Port: 3306
                 Connect_Retry: 60
               Master_Log_File: mysql-bin.000001
-          Read_Master_Log_Pos: 1873
+          Read_Master_Log_Pos: 1874
                Relay_Log_File: mysql-relay-bin.000001
                 Relay_Log_Pos: 4
         Relay_Master_Log_File: mysql-bin.000001
@@ -3716,7 +3712,7 @@ mysqld is alive
                    Last_Errno: 0
                    Last_Error: 
                  Skip_Counter: 0
-          Exec_Master_Log_Pos: 1873
+          Exec_Master_Log_Pos: 1874
               Relay_Log_Space: 157
               Until_Condition: None
                Until_Log_File: 
@@ -3735,7 +3731,7 @@ Master_SSL_Verify_Server_Cert: No
                Last_SQL_Error: 
   Replicate_Ignore_Server_Ids: 
              Master_Server_Id: 1
-                  Master_UUID: 0516c117-b033-11ef-93b7-02462b7288c1
+                  Master_UUID: 4bb446c4-b14d-11ef-a393-02993aca765b
              Master_Info_File: mysql.slave_master_info
                     SQL_Delay: 0
           SQL_Remaining_Delay: NULL
@@ -3755,7 +3751,7 @@ Master_SSL_Verify_Server_Cert: No
        Master_public_key_path: 
         Get_master_public_key: 1
             Network_Namespace: 
-2024-12-01 22:27:50 - worker configuration complete.
+2024-12-03 08:09:22 - worker configuration complete.
 
 WARNING:__main__:Command generated warnings:
 mysqladmin: [Warning] Using a password on the command line interface can be insecure.
@@ -3764,8 +3760,8 @@ mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 mysql: [Warning] Using a password on the command line interface can be insecure.
 
-INFO:__main__:Setting up proxy at IP 98.84.108.123
-INFO:__main__:Connecting to 98.84.108.123 as ubuntu
+INFO:__main__:Setting up proxy at IP 3.239.187.218
+INFO:__main__:Connecting to 3.239.187.218 as ubuntu
 INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.9p1)
 INFO:paramiko.transport:Authentication (publickey) successful!
 INFO:paramiko.transport.sftp:[chan 0] Opened sftp connection (server version 3)
@@ -3777,34 +3773,34 @@ INFO:__main__:Command executed successfully. Output:
 Hit:1 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy InRelease
 Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
-Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
-Get:5 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
-Get:6 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
-Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
-Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
-Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
-Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
-Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2179 kB]
-Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
-Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
-Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
-Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [466 kB]
-Get:16 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
-Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
-Get:18 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
-Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
-Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
-Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [11.4 kB]
-Get:22 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [440 B]
-Get:23 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.7 kB]
-Get:24 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.1 kB]
-Get:25 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
-Get:26 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
-Get:27 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.9 kB]
-Get:28 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.5 kB]
-Get:29 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
-Get:30 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
-Get:31 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
+Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
+Get:6 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
+Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
+Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
+Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
+Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
+Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2180 kB]
+Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
+Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
+Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
+Get:16 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [466 kB]
+Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
+Get:18 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
+Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
+Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
+Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
+Get:22 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [11.4 kB]
+Get:23 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [440 B]
+Get:24 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.7 kB]
+Get:25 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.1 kB]
+Get:26 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
+Get:27 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
+Get:28 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.9 kB]
+Get:29 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.5 kB]
+Get:30 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
+Get:31 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
 Get:32 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [313 kB]
 Get:33 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [13.3 kB]
 Get:34 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [2611 kB]
@@ -3816,7 +3812,7 @@ Get:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Met
 Get:40 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.6 kB]
 Get:41 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [8260 B]
 Get:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [224 B]
-Fetched 34.7 MB in 16s (2230 kB/s)
+Fetched 34.7 MB in 16s (2156 kB/s)
 Reading package lists...
 
 INFO:__main__:Executing command: sudo apt-get install -y python3-pip
@@ -3930,7 +3926,7 @@ Get:66 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 p
 Get:67 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 python3-dev amd64 3.10.6-1~22.04.1 [26.0 kB]
 Get:68 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 python3-wheel all 0.37.1-2ubuntu0.22.04.1 [32.0 kB]
 Get:69 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 python3-pip all 22.0.2+dfsg-1ubuntu0.5 [1306 kB]
-Fetched 78.7 MB in 1s (89.8 MB/s)
+Fetched 78.7 MB in 4s (21.0 MB/s)
 (Reading database ... 
 (Reading database ... 5%
 (Reading database ... 10%
@@ -4528,55 +4524,57 @@ debconf: (This frontend requires a controlling tty.)
 debconf: falling back to frontend: Teletype
 dpkg-preconfigure: unable to re-open stdin: 
 
-INFO:__main__:Executing command: pip3 install flask pymysql boto3 sqlparse ping3 requests
+INFO:__main__:Executing command: pip3 install flask pymysql boto3 sqlparse ping3 requests cachetools
 INFO:__main__:Command executed successfully. Output:
 Defaulting to user installation because normal site-packages is not writeable
 Collecting flask
   Downloading flask-3.1.0-py3-none-any.whl (102 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 103.0/103.0 KB 3.1 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 103.0/103.0 KB 3.0 MB/s eta 0:00:00
 Collecting pymysql
   Downloading PyMySQL-1.1.1-py3-none-any.whl (44 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 45.0/45.0 KB 5.4 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 45.0/45.0 KB 4.7 MB/s eta 0:00:00
 Collecting boto3
-  Downloading boto3-1.35.71-py3-none-any.whl (139 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 139.2/139.2 KB 18.0 MB/s eta 0:00:00
+  Downloading boto3-1.35.73-py3-none-any.whl (139 kB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 139.2/139.2 KB 12.4 MB/s eta 0:00:00
 Collecting sqlparse
   Downloading sqlparse-0.5.2-py3-none-any.whl (44 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 44.4/44.4 KB 10.6 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 44.4/44.4 KB 7.3 MB/s eta 0:00:00
 Collecting ping3
   Downloading ping3-4.0.8-py3-none-any.whl (14 kB)
 Requirement already satisfied: requests in /usr/lib/python3/dist-packages (2.25.1)
-Collecting blinker>=1.9
-  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
+Collecting cachetools
+  Downloading cachetools-5.5.0-py3-none-any.whl (9.5 kB)
 Collecting Jinja2>=3.1.2
   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 133.3/133.3 KB 25.0 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 133.3/133.3 KB 21.9 MB/s eta 0:00:00
+Collecting blinker>=1.9
+  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
 Collecting Werkzeug>=3.1
   Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 224.5/224.5 KB 49.8 MB/s eta 0:00:00
-Collecting click>=8.1.3
-  Downloading click-8.1.7-py3-none-any.whl (97 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 97.9/97.9 KB 20.7 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 224.5/224.5 KB 33.7 MB/s eta 0:00:00
 Collecting itsdangerous>=2.2
   Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
-Collecting botocore<1.36.0,>=1.35.71
-  Downloading botocore-1.35.71-py3-none-any.whl (13.0 MB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 13.0/13.0 MB 76.3 MB/s eta 0:00:00
+Collecting click>=8.1.3
+  Downloading click-8.1.7-py3-none-any.whl (97 kB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 97.9/97.9 KB 14.9 MB/s eta 0:00:00
+Collecting botocore<1.36.0,>=1.35.73
+  Downloading botocore-1.35.73-py3-none-any.whl (13.1 MB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 13.1/13.1 MB 77.7 MB/s eta 0:00:00
 Collecting jmespath<2.0.0,>=0.7.1
   Downloading jmespath-1.0.1-py3-none-any.whl (20 kB)
 Collecting s3transfer<0.11.0,>=0.10.0
   Downloading s3transfer-0.10.4-py3-none-any.whl (83 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 83.2/83.2 KB 15.0 MB/s eta 0:00:00
-Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /usr/lib/python3/dist-packages (from botocore<1.36.0,>=1.35.71->boto3) (1.26.5)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 83.2/83.2 KB 17.1 MB/s eta 0:00:00
+Requirement already satisfied: urllib3!=2.2.0,<3,>=1.25.4 in /usr/lib/python3/dist-packages (from botocore<1.36.0,>=1.35.73->boto3) (1.26.5)
 Collecting python-dateutil<3.0.0,>=2.1
   Downloading python_dateutil-2.9.0.post0-py2.py3-none-any.whl (229 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 229.9/229.9 KB 37.9 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 229.9/229.9 KB 33.0 MB/s eta 0:00:00
 Requirement already satisfied: MarkupSafe>=2.0 in /usr/lib/python3/dist-packages (from Jinja2>=3.1.2->flask) (2.0.1)
 Collecting MarkupSafe>=2.0
   Downloading MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
-Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil<3.0.0,>=2.1->botocore<1.36.0,>=1.35.71->boto3) (1.16.0)
-Installing collected packages: sqlparse, python-dateutil, pymysql, ping3, MarkupSafe, jmespath, itsdangerous, click, blinker, Werkzeug, Jinja2, botocore, s3transfer, flask, boto3
-Successfully installed Jinja2-3.1.4 MarkupSafe-3.0.2 Werkzeug-3.1.3 blinker-1.9.0 boto3-1.35.71 botocore-1.35.71 click-8.1.7 flask-3.1.0 itsdangerous-2.2.0 jmespath-1.0.1 ping3-4.0.8 pymysql-1.1.1 python-dateutil-2.9.0.post0 s3transfer-0.10.4 sqlparse-0.5.2
+Requirement already satisfied: six>=1.5 in /usr/lib/python3/dist-packages (from python-dateutil<3.0.0,>=2.1->botocore<1.36.0,>=1.35.73->boto3) (1.16.0)
+Installing collected packages: sqlparse, python-dateutil, pymysql, ping3, MarkupSafe, jmespath, itsdangerous, click, cachetools, blinker, Werkzeug, Jinja2, botocore, s3transfer, flask, boto3
+Successfully installed Jinja2-3.1.4 MarkupSafe-3.0.2 Werkzeug-3.1.3 blinker-1.9.0 boto3-1.35.73 botocore-1.35.73 cachetools-5.5.0 click-8.1.7 flask-3.1.0 itsdangerous-2.2.0 jmespath-1.0.1 ping3-4.0.8 pymysql-1.1.1 python-dateutil-2.9.0.post0 s3transfer-0.10.4 sqlparse-0.5.2
 
 WARNING:__main__:Command generated warnings:
   WARNING: The script sqlformat is installed in '/home/ubuntu/.local/bin' which is not on PATH.
@@ -4586,15 +4584,20 @@ WARNING:__main__:Command generated warnings:
   WARNING: The script flask is installed in '/home/ubuntu/.local/bin' which is not on PATH.
   Consider adding this directory to PATH or, if you prefer to suppress this warning, use --no-warn-script-location.
 
-INFO:paramiko.transport.sftp:[chan 4] Opened sftp connection (server version 3)
-INFO:paramiko.transport.sftp:[chan 4] sftp session closed.
+INFO:__main__:Executing command: sudo ufw allow 5000/tcp
+INFO:__main__:Command executed successfully. Output:
+Rules updated
+Rules updated (v6)
+
+INFO:paramiko.transport.sftp:[chan 5] Opened sftp connection (server version 3)
+INFO:paramiko.transport.sftp:[chan 5] sftp session closed.
 INFO:__main__:Transferred i-proxy.py to /home/ubuntu/proxy.py
 INFO:__main__:Starting proxy server
 INFO:__main__:Executing command: nohup python3 /home/ubuntu/proxy.py &> proxy.log &
 INFO:__main__:Command executed successfully. Output:
 
-INFO:__main__:Setting up Gatekeeper at IP 34.232.46.111
-INFO:__main__:Connecting to 34.232.46.111 as ubuntu
+INFO:__main__:Setting up Gatekeeper at IP 3.222.207.173
+INFO:__main__:Connecting to 3.222.207.173 as ubuntu
 INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.9p1)
 INFO:paramiko.transport:Authentication (publickey) successful!
 INFO:paramiko.transport.sftp:[chan 0] Opened sftp connection (server version 3)
@@ -4606,34 +4609,34 @@ INFO:__main__:Command executed successfully. Output:
 Hit:1 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy InRelease
 Get:2 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates InRelease [128 kB]
 Get:3 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports InRelease [127 kB]
-Get:4 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
-Get:5 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
+Get:4 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 Packages [14.1 MB]
+Get:5 http://security.ubuntu.com/ubuntu jammy-security InRelease [129 kB]
 Get:6 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe Translation-en [5652 kB]
 Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f Metadata [286 kB]
 Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
 Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
 Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
-Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2179 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2180 kB]
 Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
 Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
 Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
 Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [466 kB]
-Get:16 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
-Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
-Get:18 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
-Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
-Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
-Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
-Get:22 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [11.4 kB]
-Get:23 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [440 B]
-Get:24 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.7 kB]
-Get:25 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.1 kB]
-Get:26 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
-Get:27 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
-Get:28 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.9 kB]
-Get:29 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.5 kB]
-Get:30 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
-Get:31 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
+Get:16 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
+Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
+Get:18 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
+Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
+Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
+Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse Translation-en [11.4 kB]
+Get:22 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 c-n-f Metadata [440 B]
+Get:23 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 Packages [67.7 kB]
+Get:24 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main Translation-en [11.1 kB]
+Get:25 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/main amd64 c-n-f Metadata [388 B]
+Get:26 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/restricted amd64 c-n-f Metadata [116 B]
+Get:27 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 Packages [28.9 kB]
+Get:28 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe Translation-en [16.5 kB]
+Get:29 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/universe amd64 c-n-f Metadata [672 B]
+Get:30 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-backports/multiverse amd64 c-n-f Metadata [116 B]
+Get:31 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
 Get:32 http://security.ubuntu.com/ubuntu jammy-security/main Translation-en [313 kB]
 Get:33 http://security.ubuntu.com/ubuntu jammy-security/main amd64 c-n-f Metadata [13.3 kB]
 Get:34 http://security.ubuntu.com/ubuntu jammy-security/restricted amd64 Packages [2611 kB]
@@ -4645,7 +4648,7 @@ Get:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Met
 Get:40 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.6 kB]
 Get:41 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [8260 B]
 Get:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [224 B]
-Fetched 34.7 MB in 15s (2320 kB/s)
+Fetched 34.7 MB in 16s (2211 kB/s)
 Reading package lists...
 
 INFO:__main__:Executing command: sudo apt-get install -y python3-pip
@@ -4759,7 +4762,7 @@ Get:66 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 p
 Get:67 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 python3-dev amd64 3.10.6-1~22.04.1 [26.0 kB]
 Get:68 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 python3-wheel all 0.37.1-2ubuntu0.22.04.1 [32.0 kB]
 Get:69 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 python3-pip all 22.0.2+dfsg-1ubuntu0.5 [1306 kB]
-Fetched 78.7 MB in 1s (84.5 MB/s)
+Fetched 78.7 MB in 1s (81.3 MB/s)
 (Reading database ... 
 (Reading database ... 5%
 (Reading database ... 10%
@@ -5362,21 +5365,21 @@ INFO:__main__:Command executed successfully. Output:
 Defaulting to user installation because normal site-packages is not writeable
 Collecting flask
   Downloading flask-3.1.0-py3-none-any.whl (102 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 103.0/103.0 KB 2.4 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 103.0/103.0 KB 3.5 MB/s eta 0:00:00
 Requirement already satisfied: requests in /usr/lib/python3/dist-packages (2.25.1)
 Collecting blinker>=1.9
   Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
-Collecting click>=8.1.3
-  Downloading click-8.1.7-py3-none-any.whl (97 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 97.9/97.9 KB 8.2 MB/s eta 0:00:00
 Collecting Jinja2>=3.1.2
   Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 133.3/133.3 KB 10.5 MB/s eta 0:00:00
-Collecting itsdangerous>=2.2
-  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 133.3/133.3 KB 10.7 MB/s eta 0:00:00
 Collecting Werkzeug>=3.1
   Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 224.5/224.5 KB 19.6 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 224.5/224.5 KB 11.1 MB/s eta 0:00:00
+Collecting itsdangerous>=2.2
+  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Collecting click>=8.1.3
+  Downloading click-8.1.7-py3-none-any.whl (97 kB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 97.9/97.9 KB 8.1 MB/s eta 0:00:00
 Requirement already satisfied: MarkupSafe>=2.0 in /usr/lib/python3/dist-packages (from Jinja2>=3.1.2->flask) (2.0.1)
 Collecting MarkupSafe>=2.0
   Downloading MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)
@@ -5394,8 +5397,8 @@ INFO:__main__:Starting Gatekeeper server
 INFO:__main__:Executing command: nohup python3 /home/ubuntu/gatekeeper.py &> gatekeeper.log &
 INFO:__main__:Command executed successfully. Output:
 
-INFO:__main__:Setting up Trusted Host at IP 3.237.79.4
-INFO:__main__:Connecting to 3.237.79.4 as ubuntu
+INFO:__main__:Setting up Trusted Host at IP 3.239.199.37
+INFO:__main__:Connecting to 3.239.199.37 as ubuntu
 INFO:paramiko.transport:Connected (version 2.0, client OpenSSH_8.9p1)
 INFO:paramiko.transport:Authentication (publickey) successful!
 INFO:paramiko.transport.sftp:[chan 0] Opened sftp connection (server version 3)
@@ -5414,14 +5417,14 @@ Get:7 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/universe amd64 c-n-f 
 Get:8 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 Packages [217 kB]
 Get:9 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse Translation-en [112 kB]
 Get:10 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy/multiverse amd64 c-n-f Metadata [8372 B]
-Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2179 kB]
-Get:12 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
-Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
-Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
-Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
-Get:16 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [466 kB]
-Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
-Get:18 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
+Get:11 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 Packages [2180 kB]
+Get:12 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main Translation-en [372 kB]
+Get:13 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 c-n-f Metadata [17.9 kB]
+Get:14 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 Packages [2680 kB]
+Get:15 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted Translation-en [466 kB]
+Get:16 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/restricted amd64 c-n-f Metadata [612 B]
+Get:17 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 Packages [1177 kB]
+Get:18 http://security.ubuntu.com/ubuntu jammy-security/main amd64 Packages [1956 kB]
 Get:19 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe Translation-en [287 kB]
 Get:20 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 c-n-f Metadata [26.4 kB]
 Get:21 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/multiverse amd64 Packages [43.6 kB]
@@ -5446,7 +5449,7 @@ Get:39 http://security.ubuntu.com/ubuntu jammy-security/universe amd64 c-n-f Met
 Get:40 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 Packages [37.6 kB]
 Get:41 http://security.ubuntu.com/ubuntu jammy-security/multiverse Translation-en [8260 B]
 Get:42 http://security.ubuntu.com/ubuntu jammy-security/multiverse amd64 c-n-f Metadata [224 B]
-Fetched 34.7 MB in 5s (6585 kB/s)
+Fetched 34.7 MB in 5s (6623 kB/s)
 Reading package lists...
 
 INFO:__main__:Executing command: sudo apt-get install -y python3-pip ufw
@@ -5562,7 +5565,7 @@ Get:66 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 p
 Get:67 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/main amd64 python3-dev amd64 3.10.6-1~22.04.1 [26.0 kB]
 Get:68 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 python3-wheel all 0.37.1-2ubuntu0.22.04.1 [32.0 kB]
 Get:69 http://us-east-1.ec2.archive.ubuntu.com/ubuntu jammy-updates/universe amd64 python3-pip all 22.0.2+dfsg-1ubuntu0.5 [1306 kB]
-Fetched 78.7 MB in 1s (67.5 MB/s)
+Fetched 78.7 MB in 1s (79.3 MB/s)
 (Reading database ... 
 (Reading database ... 5%
 (Reading database ... 10%
@@ -6165,21 +6168,21 @@ INFO:__main__:Command executed successfully. Output:
 Defaulting to user installation because normal site-packages is not writeable
 Collecting flask
   Downloading flask-3.1.0-py3-none-any.whl (102 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 103.0/103.0 KB 3.2 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 103.0/103.0 KB 3.0 MB/s eta 0:00:00
 Requirement already satisfied: requests in /usr/lib/python3/dist-packages (2.25.1)
-Collecting Jinja2>=3.1.2
-  Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 133.3/133.3 KB 7.9 MB/s eta 0:00:00
 Collecting click>=8.1.3
   Downloading click-8.1.7-py3-none-any.whl (97 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 97.9/97.9 KB 16.9 MB/s eta 0:00:00
-Collecting blinker>=1.9
-  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
-Collecting itsdangerous>=2.2
-  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 97.9/97.9 KB 6.7 MB/s eta 0:00:00
 Collecting Werkzeug>=3.1
   Downloading werkzeug-3.1.3-py3-none-any.whl (224 kB)
-     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 224.5/224.5 KB 19.2 MB/s eta 0:00:00
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 224.5/224.5 KB 11.2 MB/s eta 0:00:00
+Collecting itsdangerous>=2.2
+  Downloading itsdangerous-2.2.0-py3-none-any.whl (16 kB)
+Collecting Jinja2>=3.1.2
+  Downloading jinja2-3.1.4-py3-none-any.whl (133 kB)
+     \u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501\u2501 133.3/133.3 KB 9.4 MB/s eta 0:00:00
+Collecting blinker>=1.9
+  Downloading blinker-1.9.0-py3-none-any.whl (8.5 kB)
 Requirement already satisfied: MarkupSafe>=2.0 in /usr/lib/python3/dist-packages (from Jinja2>=3.1.2->flask) (2.0.1)
 Collecting MarkupSafe>=2.0
   Downloading MarkupSafe-3.0.2-cp310-cp310-manylinux_2_17_x86_64.manylinux2014_x86_64.whl (20 kB)

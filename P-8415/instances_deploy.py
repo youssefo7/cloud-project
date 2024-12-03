@@ -2,6 +2,7 @@ import boto3
 import logging
 import argparse
 import requests
+import os
 from botocore.exceptions import ClientError
 
 # Configure logging
@@ -18,106 +19,101 @@ INSTANCE_TAG_PREFIX = 'MySQLCluster'
 KEY_FILE_PATH = f'{KEY_NAME}.pem'
 AMI_ID = 'ami-005fc0f236362e99f'  # Ubuntu 20.04 LTS in us-east-1
 
-# Dynamically retrieve your public IP
+# Dynamically retrieve your public IP and append CIDR suffix
 try:
-    YOUR_PUBLIC_IP = requests.get('https://checkip.amazonaws.com').text.strip()
-    logger.info(f"Your public IP: {YOUR_PUBLIC_IP}")
+    MY_PUBLIC_IP = f"{requests.get('https://checkip.amazonaws.com').text.strip()}/32"
+    logger.info(f"Your public IP: {MY_PUBLIC_IP}")
 except requests.RequestException as e:
     logger.error(f"Failed to retrieve public IP: {e}")
-    YOUR_PUBLIC_IP = "0.0.0.0/0"  # Fallback to allow all traffic if IP retrieval fails
+    MY_PUBLIC_IP = "0.0.0.0/0"  # Fallback to allow all traffic if IP retrieval fails
 
-# Updated Security Group Configurations with more permissive rules
 SECURITY_GROUP_CONFIGS = {
-    "manager": {
-        "Description": "Manager security group",
-        "Inbound": [
-            (3306, "0.0.0.0/0"),  # Allow MySQL traffic from anywhere
-            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
-        ],
-    },
-    "worker": {
-        "Description": "Worker security group",
-        "Inbound": [
-            (3306, "0.0.0.0/0"),  # Allow MySQL traffic from anywhere
-            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
-        ],
-    },
-    "proxy": {
-        "Description": "Proxy security group",
-        "Inbound": [
-            (5000, "0.0.0.0/0"),  # Allow traffic from anywhere
-            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
-        ],
-    },
     "gatekeeper": {
         "Description": "Gatekeeper security group",
         "Inbound": [
             (5000, "0.0.0.0/0"),  # Allow external access to Gatekeeper
-            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
+            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
         ],
     },
     "trusted_host": {
         "Description": "Trusted Host security group",
         "Inbound": [
-            (5000, "0.0.0.0/0"),  # Allow traffic from anywhere
-            (22, "0.0.0.0/0"),    # Allow SSH from anywhere
+            (5000, "gatekeeper"),  # Allow traffic from Gatekeeper SG
+            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
+        ],
+    },
+    "proxy": {
+        "Description": "Proxy security group",
+        "Inbound": [
+            (5000, "trusted_host"),  # Allow traffic from Trusted Host SG
+            (22, MY_PUBLIC_IP),    # Allow SSH from your IP
+        ],
+    },
+    "manager": {
+        "Description": "Manager security group",
+        "Inbound": [
+            (3306, "proxy"),   # Allow MySQL traffic from Proxy SG
+            (3306, "worker"),  # Allow MySQL traffic from Worker SG for replication
+            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
+        ],
+    },
+    "worker": {
+        "Description": "Worker security group",
+        "Inbound": [
+            (3306, "proxy"),   # Allow MySQL traffic from Proxy SG
+            (3306, "manager"), # Allow MySQL traffic from Manager SG for replication
+            (22, MY_PUBLIC_IP),  # Allow SSH from your IP
         ],
     },
 }
 
-# Function to parse command-line arguments
-def parse_arguments():
-    parser = argparse.ArgumentParser(description='AWS EC2 Deployment Script')
-    parser.add_argument('--create-instances', action='store_true', help='Create new instances')
-    parser.add_argument('--setup-aws-resources', action='store_true', help='Setup AWS resources (key pair, security groups)')
-    return parser.parse_args()
-
-# Function to create or update security groups with role-based configurations
-def create_or_update_security_group(role, description, inbound_rules, security_groups):
+def create_or_update_security_group(role, description):
+    """Create a security group and return its ID."""
     try:
-        # Try to create the security group
         response = ec2_client.create_security_group(GroupName=role, Description=description)
         sg_id = response['GroupId']
         logger.info(f"Created security group '{role}' with ID: {sg_id}")
+        return sg_id
     except ClientError as e:
         if 'InvalidGroup.Duplicate' in str(e):
-            # Security group already exists, retrieve its ID
             response = ec2_client.describe_security_groups(GroupNames=[role])
             sg_id = response['SecurityGroups'][0]['GroupId']
             logger.info(f"Security group '{role}' already exists with ID: {sg_id}")
+            return sg_id
         else:
             logger.error(f"Error creating security group for {role}: {e}")
             raise
 
-    # Store the security group ID for reference
-    security_groups[role] = sg_id
-
-    # Revoke existing ingress rules to avoid duplicates
-    current_permissions = ec2_client.describe_security_groups(GroupIds=[sg_id])['SecurityGroups'][0].get('IpPermissions', [])
-    if current_permissions:
-        ec2_client.revoke_security_group_ingress(GroupId=sg_id, IpPermissions=current_permissions)
-        logger.info(f"Revoked existing ingress rules for security group '{role}'")
-
-    # Build new ingress rules
+def apply_security_group_rules(sg_id, inbound_rules, security_groups):
+    """Apply inbound rules to an existing security group."""
     ip_permissions = []
-    for rule in inbound_rules:
-        port, sources = rule
-        for source in sources.split(","):
-            ip_permissions.append({
-                'IpProtocol': 'tcp',
-                'FromPort': port,
-                'ToPort': port,
-                'IpRanges': [{'CidrIp': source}]
-            })
+    for port, source in inbound_rules:
+        ip_permissions.append({
+            'IpProtocol': 'tcp',
+            'FromPort': port,
+            'ToPort': port,
+            'IpRanges': [{'CidrIp': source}] if '/' in source else [],
+            'UserIdGroupPairs': [{'GroupId': security_groups[source]}] if source in security_groups else [],
+        })
 
-    # Authorize new ingress rules
-    if ip_permissions:
-        ec2_client.authorize_security_group_ingress(GroupId=sg_id, IpPermissions=ip_permissions)
-        logger.info(f"Ingress rules set for security group '{role}'")
+    ec2_client.authorize_security_group_ingress(GroupId=sg_id, IpPermissions=ip_permissions)
+    logger.info(f"Ingress rules set for security group with ID: {sg_id}")
 
-    return sg_id
+def create_key_pair(key_name, key_file_path):
+    try:
+        ec2_client.describe_key_pairs(KeyNames=[key_name])
+        logger.info(f"Key pair '{key_name}' already exists.")
+    except ClientError as e:
+        if 'InvalidKeyPair.NotFound' in str(e):
+            key_pair = ec2_client.create_key_pair(KeyName=key_name)
+            with open(key_file_path, 'w') as file:
+                file.write(key_pair['KeyMaterial'])
+            os.chmod(key_file_path, 0o400)
+            logger.info(f"Created key pair '{key_name}' and saved to '{key_file_path}'.")
+        else:
+            logger.error(f"Error checking for key pair '{key_name}': {e}")
+            raise
 
-# Function to get the default subnet ID
 def get_default_subnet_id():
     response = ec2_client.describe_subnets(
         Filters=[{'Name': 'default-for-az', 'Values': ['true']}]
@@ -130,7 +126,6 @@ def get_default_subnet_id():
         logger.error("No default subnet found.")
         return None
 
-# Function to launch instances and wait for them to be ready
 def launch_and_wait_instances(role, count, instance_type, sg_id, subnet_id):
     try:
         instances = ec2.create_instances(
@@ -167,24 +162,32 @@ def launch_and_wait_instances(role, count, instance_type, sg_id, subnet_id):
         logger.error(f"Failed to create and wait for instances for {role}: {e}")
         raise
 
-# Main execution logic
 if __name__ == "__main__":
-    args = parse_arguments()
+    parser = argparse.ArgumentParser(description='AWS EC2 Deployment Script')
+    parser.add_argument('--create-instances', action='store_true', help='Create new instances')
+    parser.add_argument('--setup-aws-resources', action='store_true', help='Setup AWS resources (key pair, security groups)')
+    args = parser.parse_args()
 
     if args.setup_aws_resources:
-        # Setup security groups
+        create_key_pair(KEY_NAME, KEY_FILE_PATH)
         security_groups = {}
+
+        # Step 1: Create all security groups
         for role, config in SECURITY_GROUP_CONFIGS.items():
-            sg_id = create_or_update_security_group(role, config['Description'], config['Inbound'], security_groups)
+            sg_id = create_or_update_security_group(role, config['Description'])
+            security_groups[role] = sg_id
+
+        # Step 2: Apply inbound rules to all security groups
+        for role, config in SECURITY_GROUP_CONFIGS.items():
+            sg_id = security_groups[role]
+            apply_security_group_rules(sg_id, config['Inbound'], security_groups)
 
     if args.create_instances:
-        # Get the default subnet ID
         default_subnet_id = get_default_subnet_id()
         if not default_subnet_id:
             logger.error("Cannot proceed without a default subnet.")
             exit(1)
 
-        # Launch instances and wait for each instance to be ready
         for role, config in SECURITY_GROUP_CONFIGS.items():
             sg_id = security_groups[role]
             count = 1 if role != "worker" else 2

@@ -2,10 +2,10 @@ import os
 import json
 import pymysql
 import random
-import sqlparse
-import ping3
 import socket
 import time
+import asyncio
+from cachetools import TTLCache
 from flask import Flask, request
 
 # Configuration
@@ -53,25 +53,51 @@ def parse_query(query):
         return 'UPDATE'
     elif query.startswith('delete'):
         return 'DELETE'
-    elif query.startswith('create'):
-        return 'CREATE'
-    elif query.startswith('alter'):
-        return 'ALTER'
-    elif query.startswith('drop'):
-        return 'DROP'
     else:
         return 'OTHER'
 
-def test_tcp_latency(host, port=3306):
-    """Measure the latency to a MySQL instance using TCP."""
+# Caching latencies to avoid frequent recalculations
+LATENCY_CACHE = TTLCache(maxsize=10, ttl=10)
+
+async def measure_latency_async(host, port=3306):
+    """Asynchronously measure TCP latency to a host."""
+    loop = asyncio.get_event_loop()
     try:
-        start = time.time()
-        with socket.create_connection((host, port), timeout=2):
-            return time.time() - start
+        start = loop.time()
+        await loop.run_in_executor(None, lambda: socket.create_connection((host, port), timeout=2))
+        return loop.time() - start
     except Exception:
         return None  # Return None for unreachable hosts
 
-def route_query(query):
+async def get_best_worker_latency_only(worker_configs):
+    """Determine the best worker based on latency only."""
+    # Use cached latencies if available
+    latencies = {worker["host"]: LATENCY_CACHE.get(worker["host"]) for worker in worker_configs}
+    
+    # Measure latencies asynchronously for uncached workers
+    uncached_workers = [worker for worker in worker_configs if worker["host"] not in LATENCY_CACHE]
+    if uncached_workers:
+        new_latencies = await asyncio.gather(
+            *[measure_latency_async(worker["host"], worker["port"]) for worker in uncached_workers]
+        )
+        for worker, latency in zip(uncached_workers, new_latencies):
+            LATENCY_CACHE[worker["host"]] = latency
+            latencies[worker["host"]] = latency
+
+    # Filter out workers with unavailable latencies
+    available_workers = {
+        worker["host"]: latencies[worker["host"]]
+        for worker in worker_configs
+        if latencies[worker["host"]] is not None
+    }
+    if not available_workers:
+        raise Exception("No reachable workers available for customized mode")
+
+    # Select the worker with the lowest latency
+    best_worker_host = min(available_workers, key=available_workers.get)
+    return next(worker for worker in worker_configs if worker["host"] == best_worker_host)
+
+async def route_query(query):
     """Route the query based on the mode and type of operation."""
     query_type = parse_query(query)
     app.logger.debug(f"Parsed query type: {query_type}")
@@ -86,21 +112,11 @@ def route_query(query):
 
     if query_type == "SELECT":  # READ operations
         if mode == "direct_hit":
-            connection_config = random.choice(worker_configs)
+            connection_config = manager_config
         elif mode == "random":
             connection_config = random.choice(worker_configs)
         elif mode == "customized":
-            latencies = {
-                worker["host"]: test_tcp_latency(worker["host"], worker["port"])
-                for worker in worker_configs
-            }
-            app.logger.debug(f"Calculated latencies: {latencies}")
-            available_workers = {host: latency for host, latency in latencies.items() if latency is not None}
-            if not available_workers:
-                raise Exception("No reachable workers available for customized mode")
-            best_worker = min(available_workers, key=available_workers.get)
-            app.logger.info(f"Selected worker for query: {best_worker}")
-            connection_config = next(w for w in worker_configs if w["host"] == best_worker)
+            connection_config = await get_best_worker_latency_only(worker_configs)
         else:
             raise ValueError(f"Unknown mode: {mode}")
         app.logger.info(f"Routing SELECT query to worker: {connection_config['host']}")
@@ -115,7 +131,7 @@ def handle_query():
     query = request.json.get("query")
     try:
         app.logger.info(f"Received query: {query}")
-        connection = route_query(query)
+        connection = asyncio.run(route_query(query))  # Use asyncio to handle asynchronous routing
         with connection.cursor() as cursor:
             cursor.execute(query)
             if cursor.description:  # SELECT queries return results

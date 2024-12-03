@@ -165,7 +165,8 @@ def main():
         commands = [
             'sudo apt-get update',
             'sudo apt-get install -y python3-pip',
-            'pip3 install flask pymysql boto3 sqlparse ping3 requests'
+            'pip3 install flask pymysql boto3 sqlparse ping3 requests cachetools',
+            'sudo ufw allow 5000/tcp'  # Open port 5000 for Flask
         ]
         for cmd in commands:
             execute_command(ssh_proxy, cmd)
