@@ -236,34 +236,6 @@ def main():
         # Transfer trusted_host.py to Trusted Host
         transfer_file(ssh_trusted_host, trusted_host_script, '/home/ubuntu/trusted_host.py')
 
-        # Implement security measures on Trusted Host
-        logger.info("Securing Trusted Host")
-
-        # # Reset UFW to default settings
-        # execute_command(ssh_trusted_host, 'echo "y" | sudo ufw reset')
-
-        # # Deny all incoming connections by default
-        # execute_command(ssh_trusted_host, 'sudo ufw default deny incoming')
-        # execute_command(ssh_trusted_host, 'sudo ufw default allow outgoing')
-
-        # Allow SSH from your IP (optional)
-        # Replace 'your_public_ip' with your actual IP address if needed
-        # execute_command(ssh_trusted_host, 'sudo ufw allow from your_public_ip to any port 22')
-
-        # # Allow incoming connections on port 5000 from Gatekeeper's private IP
-        # execute_command(ssh_trusted_host, f'sudo ufw allow from {gatekeeper_private_ip} to any port 5000')
-
-        # Deny other connections to port 5000
-        # Not necessary since default is deny incoming
-
-        # # Enable UFW
-        # execute_command(ssh_trusted_host, 'sudo ufw --force enable')
-
-        # Disable SSH (optional and only if you have console access)
-        # Be cautious: Disabling SSH can lock you out of the instance
-        # execute_command(ssh_trusted_host, 'sudo systemctl stop ssh')
-        # execute_command(ssh_trusted_host, 'sudo systemctl disable ssh')
-
         # Start trusted_host.py
         logger.info("Starting Trusted Host server")
         command = 'nohup python3 /home/ubuntu/trusted_host.py &> trusted_host.log &'
